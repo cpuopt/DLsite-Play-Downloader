@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         DLsite Play Downloader
-// @namespace    http://tampermonkey.net/
+// @namespace    https://github.com/cpuopt/DLsite-Play-Downloader
 // @version      1.0
 // @description  在浏览器完成DLsite Play漫画的下载、拼图和保存
 // @author       cpufan
