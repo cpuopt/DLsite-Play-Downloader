@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         DLsite Play Downloader
 // @namespace    https://github.com/cpuopt/DLsite-Play-Downloader
-// @version      1.0
+// @version      1.1
 // @description  在浏览器完成DLsite Play漫画的下载、拼图和保存
 // @author       cpufan
 // @match        https://play.dlsite.com/*
@@ -424,7 +424,9 @@
             // feature is supported
             window.addEventListener("urlchange", () => {
                 mutationob.stop();
-                pluginPanel.element.remove();
+                if (pluginPanel != undefined && pluginPanel.element != undefined) {
+                    pluginPanel.element.remove();
+                }
                 mutationob.start();
             });
         }
