@@ -6,6 +6,7 @@
 // @author       cpufan
 // @match        https://play.dlsite.com/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=dlsite.com
+// @license      MIT
 // @grant        window.onurlchange
 // @grant        GM_addStyle
 // @grant        GM_setValue
