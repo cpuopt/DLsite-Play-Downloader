@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         DLsite Play Downloader
 // @namespace    https://github.com/cpuopt/DLsite-Play-Downloader
-// @version      1.1
+// @version      1.2
 // @description  在浏览器完成DLsite Play漫画的下载、拼图和保存
 // @author       cpufan
 // @match        https://play.dlsite.com/*
@@ -85,7 +85,7 @@
 
                 // request interceptor starts
 
-                if (/https:\/\/play.dl.dlsite.com\/csr\/api\/diazepam_hybrid.php\?mode=7&file=face.xml&reqtype=0&vm=4&param=.*&time=\d+/.test(resource)) {
+                if (/https:\/\/play.dl.dlsite.com\/csr\/api\/diazepam_hybrid.php\?mode=7&file=face.xml&reqtype=0&vm=\d&param=.*&time=\d+/.test(resource)) {
                     FetchInterceptor.stop();
                     GM_setValue("URLStyle", resource);
                     console.debug(`成功获取到图片链接格式`, resource);
