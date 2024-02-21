@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         DLsite Play Downloader
 // @namespace    https://github.com/cpuopt/DLsite-Play-Downloader
-// @version      1.2
+// @version      1.3
 // @description  在浏览器完成DLsite Play漫画的下载、拼图和保存
 // @author       cpufan
 // @match        https://play.dlsite.com/*
@@ -49,7 +49,7 @@
         constructor() {
             let self = this;
             this.observer = new MutationObserver(() => {
-                let artwork = document.querySelector("li[class^='WorkTreeList_item']");
+                let artwork = document.querySelector("ol[class^='_tree_'] > li[class^='_item_']");
                 console.debug("触发监视器", artwork);
                 if (artwork != null && artwork.querySelector("button") == null) {
                     self.haveArtwork(artwork);
@@ -298,9 +298,9 @@
             let button = document.createElement("button");
             button.className = className;
             button.innerText = "使用脚本下载";
-            let Title = father.querySelector("div[class^='WorkTreeList_text'] > p[class^='WorkTreeList_filename']").innerText;
-            let Author = document.querySelector("p[class^='WorkInfo_author']").innerText.replace("/", " ");
-            let Maker = document.querySelector("p[class^='WorkInfo_maker'] > a").innerText.replace("/", " ");
+            let Title = father.querySelector("div[class^='_text_'] > p[class^='_filename_']").innerText;
+            let Author = document.querySelector("div[class^='_contentMain_'] > p[class^='_author_']").innerText.replace("/", " ");
+            let Maker = document.querySelector("div[class^='_contentMain_'] > p[class^='_maker_'] > a").innerText.replace("/", " ");
             button.addEventListener("click", (e) => {
                 // 显示插件面板
                 pluginPanel = new PluginPanel();
