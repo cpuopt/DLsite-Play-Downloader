@@ -5,7 +5,7 @@ Download comics from DLsite Play in browser.
 ## 安装 Install
 [从Github安装](https://github.com/cpuopt/DLsite-Play-Downloader/raw/main/DLsite-Play-Downloader.user.js)
 
-前往[Greasy Fork页面]([https://update.greasyfork.org/scripts/480281/DLsite%20Play%20Downloader.user.js](https://greasyfork.org/zh-CN/scripts/480281-dlsite-play-downloader))
+前往[Greasy Fork](https://greasyfork.org/zh-CN/scripts/480281-dlsite-play-downloader)页面
 ## 使用 Usage
 
 ![image](https://greasyfork.org/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBL3pqQVE9PSIsImV4cCI6bnVsbCwicHVyIjoiYmxvYl9pZCJ9fQ==--6434f4925173bc873dc453f4f359b961ababdda6/0.png?locale=zh-CN)
