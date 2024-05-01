@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         DLsite Play Downloader
 // @namespace    https://github.com/cpuopt/DLsite-Play-Downloader
-// @version      1.3
+// @version      1.4
 // @description  在浏览器完成DLsite Play漫画的下载、拼图和保存
 // @author       cpufan
 // @match        https://play.dlsite.com/*
@@ -205,27 +205,28 @@
                 if (xmlResponse.ok && binResponse.ok) {
                     let doc = DLsiteMangaDownloader.parseText2Xml(await xmlResponse.text());
                     let mateix = doc.evaluate("//Scramble", doc).iterateNext().textContent.split(",");
-
+                    const width = parseInt(doc.evaluate("//StepRect/Width", doc).iterateNext().textContent)
+                    const height = parseInt(doc.evaluate("//StepRect/Height", doc).iterateNext().textContent)
                     let vector = new Array(mateix.length);
                     mateix.forEach((num, index) => {
                         vector[parseInt(num)] = index;
                     });
-                    console.debug(mateix, vector);
+                    console.debug(index, mateix, vector);
                     let image = await binResponse.blob();
 
-                    self.imagePuzzle({ index: index, vector: vector, blob: image, TocTitle: null });
+                    self.imagePuzzle({ index: index, vector: vector, blob: image, TocTitle: null, size: { width: width, height: height } });
                 }
             });
         }
-        imagePuzzle({ index, vector, blob, TocTitle }) {
+        imagePuzzle({ index, vector, blob, TocTitle, size }) {
             let self = this;
             let canvas = document.createElement("canvas");
-            canvas.width = this.Width;
-            canvas.height = this.Height;
+            canvas.width = size.width
+            canvas.height = size.height
             let HorBlock = this.HorBlock;
             let VerBlock = this.VerBlock;
-            let sourceW = Math.trunc(this.Width / (this.HorBlock * 8)) * 8;
-            let sourceH = Math.trunc(this.Height / (this.VerBlock * 8)) * 8;
+            let sourceW = Math.trunc(size.width / (this.HorBlock * 8)) * 8;
+            let sourceH = Math.trunc(size.height / (this.VerBlock * 8)) * 8;
             let ctx = canvas.getContext("2d");
             const img = new Image();
             img.src = URL.createObjectURL(blob);
