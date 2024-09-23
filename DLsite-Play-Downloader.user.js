@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         DLsite Play Downloader
 // @namespace    https://github.com/cpuopt/DLsite-Play-Downloader
-// @version      1.5
+// @version      1.6
 // @description  在浏览器完成DLsite Play漫画的下载、拼图和保存
 // @author       cpufan
 // @match        https://play.dlsite.com/*
@@ -59,7 +59,11 @@
         start() {
             const illustsDivNode = document.querySelector("body");
             console.debug(illustsDivNode);
-            this.observer.observe(illustsDivNode, { attributes: false, childList: true, subtree: true });
+            this.observer.observe(illustsDivNode, {
+                attributes: false,
+                childList: true,
+                subtree: true,
+            });
             console.debug("监视器启动");
         }
         stop() {
@@ -80,29 +84,36 @@
         static originalFetch = unsafeWindow.fetch;
 
         static intercept() {
-            unsafeWindow.fetch = async (...args) => {
-                let [resource, config] = args;
+            const o = unsafeWindow.fetch;
+            unsafeWindow.fetch = (...args) => {
+                return new Promise((resolve, reject) => {
+                    let [resource, config] = args;
+                    // request interceptor starts
+                    console.log(resource, config);
 
-                // request interceptor starts
+                    if (/https:\/\/play.dl.dlsite.com\/csr\/api\/diazepam_hybrid.php\?mode=7&file=face.xml&reqtype=0&vm=\d&param=.*&time=\d+/.test(resource)) {
+                        FetchInterceptor.stop();
+                        GM_setValue("URLStyle", resource);
+                        console.debug(`成功获取到图片链接格式`, resource);
+                        GM_setValue("download", false);
+                        window.close();
+                    } else {
+                        console.debug("图片链接格式不匹配");
+                        GM_setValue("download", false);
 
-                if (/https:\/\/play.dl.dlsite.com\/csr\/api\/diazepam_hybrid.php\?mode=7&file=face.xml&reqtype=0&vm=\d&param=.*&time=\d+/.test(resource)) {
-                    FetchInterceptor.stop();
-                    GM_setValue("URLStyle", resource);
-                    console.debug(`成功获取到图片链接格式`, resource);
-                    window.close();
-                } else {
-                    console.debug("图片链接格式不匹配");
-                }
+                        // window.location.reload();
+                    }
 
-                // request interceptor ends
+                    // request interceptor ends
 
-                const response = await this.originalFetch(resource, config);
-                if (!response.ok && response.status === 404) {
-                    // 404 error handling
-                    return Promise.reject(response);
-                }
-                // response interceptor here
-                return response;
+                    o(...args).then((response) => {
+                        console.log(response);
+
+                        resolve(response);
+                    });
+
+                    // response interceptor here
+                });
             };
         }
 
@@ -205,8 +216,8 @@
                 if (xmlResponse.ok && binResponse.ok) {
                     let doc = DLsiteMangaDownloader.parseText2Xml(await xmlResponse.text());
                     let mateix = doc.evaluate("//Scramble", doc).iterateNext().textContent.split(",");
-                    const width = parseInt(doc.evaluate("//StepRect/Width", doc).iterateNext().textContent)
-                    const height = parseInt(doc.evaluate("//StepRect/Height", doc).iterateNext().textContent)
+                    const width = parseInt(doc.evaluate("//StepRect/Width", doc).iterateNext().textContent);
+                    const height = parseInt(doc.evaluate("//StepRect/Height", doc).iterateNext().textContent);
                     let vector = new Array(mateix.length);
                     mateix.forEach((num, index) => {
                         vector[parseInt(num)] = index;
@@ -214,15 +225,21 @@
                     console.debug(index, mateix, vector);
                     let image = await binResponse.blob();
 
-                    self.imagePuzzle({ index: index, vector: vector, blob: image, TocTitle: null, size: { width: width, height: height } });
+                    self.imagePuzzle({
+                        index: index,
+                        vector: vector,
+                        blob: image,
+                        TocTitle: null,
+                        size: { width: width, height: height },
+                    });
                 }
             });
         }
         imagePuzzle({ index, vector, blob, TocTitle, size }) {
             let self = this;
             let canvas = document.createElement("canvas");
-            canvas.width = size.width
-            canvas.height = size.height
+            canvas.width = size.width;
+            canvas.height = size.height;
             let HorBlock = this.HorBlock;
             let VerBlock = this.VerBlock;
             let sourceW = Math.trunc(size.width / (this.HorBlock * 8)) * 8;
@@ -243,7 +260,11 @@
                 }
                 canvas.toBlob(
                     function (blob) {
-                        self.outputBlobs.push({ index: index, blob: blob, TocTitle: null });
+                        self.outputBlobs.push({
+                            index: index,
+                            blob: blob,
+                            TocTitle: null,
+                        });
                         pluginPanel.addLog(`已处理完成：${self.outputBlobs.length}/${self.urls.length}`);
 
                         if (self.outputBlobs.length == self.urls.length) {
@@ -434,9 +455,8 @@
     }
     if (window.location.href.startsWith("https://play.dlsite.com/csr/") && GM_getValue("download")) {
         // 当前位于漫画阅读器
-
         console.debug("当前位于漫画阅读器", "下载状态：", GM_getValue("download"));
-        GM_setValue("download", false);
+
         // 加载StreamSaver和zip-stream
         let scripts = ["https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.js", "https://cdn.jsdelivr.net/npm/streamsaver@2.0.3/StreamSaver.min.js", "https://jimmywarting.github.io/StreamSaver.js/examples/zip-stream.js"];
         scripts.forEach((url) => {
