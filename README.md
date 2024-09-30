@@ -7,7 +7,5 @@ Download comics from DLsite Play in browser.
 
 前往[Greasy Fork](https://greasyfork.org/zh-CN/scripts/480281-dlsite-play-downloader)页面
 ## 使用 Usage
-
-![image](https://greasyfork.org/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBL3pqQVE9PSIsImV4cCI6bnVsbCwicHVyIjoiYmxvYl9pZCJ9fQ==--6434f4925173bc873dc453f4f359b961ababdda6/0.png?locale=zh-CN)
-![image](https://greasyfork.org/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBLzNqQVE9PSIsImV4cCI6bnVsbCwicHVyIjoiYmxvYl9pZCJ9fQ==--1e78ec3d59dc934cde2a386ff8dcb57641b08065/1.png?locale=zh-CN)
-![image](https://greasyfork.org/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBLzdqQVE9PSIsImV4cCI6bnVsbCwicHVyIjoiYmxvYl9pZCJ9fQ==--284516988a83036affddc3d101d0a2231e13a6dd/2.png?locale=zh-CN)
+<img src="https://greasyfork.s3.us-east-2.amazonaws.com/x8si637o4ae69y2hepb50kv1t317">
+<img src="https://greasyfork.s3.us-east-2.amazonaws.com/h7dulfmvdybqh8h1yl222wsy13g5">

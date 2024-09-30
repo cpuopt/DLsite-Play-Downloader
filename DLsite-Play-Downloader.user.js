@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         DLsite Play Downloader
 // @namespace    https://github.com/cpuopt/DLsite-Play-Downloader
-// @version      1.6
+// @version      1.7
 // @description  在浏览器完成DLsite Play漫画的下载、拼图和保存
 // @author       cpufan
 // @match        https://play.dlsite.com/*
@@ -39,6 +39,19 @@
     .button-down:hover{
         background-color: #000000;
     }
+    .jpeg-button-down{
+    margin-left: auto;
+    border: none;
+    background-color: #007aff;
+    color: white;
+    padding-inline: 0.6rem;
+    z-index: 2;
+    font-weight: bolder;
+    transition: background-color .5s;
+        }
+    .jpeg-button-down:hover{
+        background-color: #000000;
+    }
     `);
     var mutationob;
     var pluginPanel;
@@ -49,10 +62,14 @@
         constructor() {
             let self = this;
             this.observer = new MutationObserver(() => {
-                let artwork = document.querySelector("ol[class^='_tree_'] > li[class^='_item_']");
-                console.debug("触发监视器", artwork);
+                let artwork = document.querySelector("ol[class^='_tree_'] > li[class^='_item_']:has(svg)");
+                let jpegs = document.querySelectorAll("ol[class^='_tree_'] > li[class^='_item_']:has(img)");
+                console.debug("触发监视器", artwork, jpegs);
                 if (artwork != null && artwork.querySelector("button") == null) {
                     self.haveArtwork(artwork);
+                }
+                if (jpegs.length > 0 && document.querySelector("div[class^='_worktree_'] > ul[class^='_breadcrumb_']").querySelector("button") == null) {
+                    self.haveJpegs(jpegs);
                 }
             });
         }
@@ -72,7 +89,14 @@
         }
         haveArtwork(artwork) {
             this.stop();
-            let button = new DownloadButton("button-down", artwork);
+            let button = new ArtworkDownloadButton("button-down", artwork);
+            if (pluginPanel == undefined) {
+                mutationob.start();
+            }
+        }
+        haveJpegs(jpegs) {
+            this.stop();
+            let button = new JpegsDownloadButton("jpeg-button-down", document.querySelector("div[class^='_worktree_'] > ul[class^='_breadcrumb_']"));
             if (pluginPanel == undefined) {
                 mutationob.start();
             }
@@ -314,7 +338,7 @@
             pump();
         }
     }
-    class DownloadButton {
+    class ArtworkDownloadButton {
         button;
         constructor(className, father) {
             let button = document.createElement("button");
@@ -351,6 +375,36 @@
                 setTimeout(() => {
                     father.click();
                 }, 2000);
+            });
+            father.appendChild(button);
+            this.button = button;
+        }
+    }
+    class JpegsDownloadButton {
+        button;
+        constructor(className, father) {
+            let button = document.createElement("button");
+            button.className = className;
+            button.innerText = "使用脚本下载";
+            let Title = document.querySelector("div[class^='_info_'] > div[class*='_contentMain_'] > :nth-child(1)").innerText;
+            let Author = document.querySelector("div[class^='_info_'] > div[class*='_contentMain_'] > :nth-child(2)").innerText.replace("/", " ");
+            let Maker = document.querySelector("div[class^='_info_'] > div[class*='_contentMain_'] > :nth-child(3)").innerText.replace("/", " ");
+            button.addEventListener("click", async (e) => {
+                // 显示插件面板
+                pluginPanel = new PluginPanel();
+                mutationob.stop();
+
+                console.debug("filename:\n", `[${Author}] ${Title}`);
+                pluginPanel.addLog(`获取到标题：<b>${Title}</b>`);
+                pluginPanel.addLog(`获取到作者：<b>${Author}</b>`);
+                pluginPanel.addLog(`获取到出版商：<b>${Maker}</b>`);
+                e.stopPropagation(); // 阻止冒泡
+
+                const { url: downloadPrefix, cookies } = await getDownloadCredential();
+                const [mangaName, downloadUrls] = await Promise.all([getMangaName(), getDownloadUrls(downloadPrefix)]);
+                const downloadResults = await Promise.all(downloadUrls.map((value) => imagePuzzle(downloadPrefix, value)));
+
+                save(mangaName, downloadResults);
             });
             father.appendChild(button);
             this.button = button;
@@ -427,6 +481,12 @@
             this.log.innerHTML = oldHTML + `<p>${text}<p>`;
             this.log.scrollTop = this.log.scrollHeight;
         }
+        destroy() {
+            const element = document.querySelector("div.plugin-panel");
+            if (element) {
+                document.body.removeChild(element);
+            }
+        }
     }
 
     if (!window.location.href.startsWith("https://play.dlsite.com/csr/")) {
@@ -435,7 +495,7 @@
         mutationob.start();
         GM_deleteValue("URLStyle");
         // 加载StreamSaver和zip-stream
-        let scripts = ["https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.js", "https://cdn.jsdelivr.net/npm/streamsaver@2.0.3/StreamSaver.min.js", "https://jimmywarting.github.io/StreamSaver.js/examples/zip-stream.js"];
+        let scripts = ["https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.js", "https://cdn.jsdelivr.net/npm/streamsaver@2.0.3/StreamSaver.min.js", "https://jimmywarting.github.io/StreamSaver.js/examples/zip-stream.js", "https://unpkg.com/mersenne-twister@1.1.0/src/mersenne-twister.js"];
         scripts.forEach((url) => {
             let script = document.createElement("script");
             script.setAttribute("type", "text/javascript");
@@ -448,8 +508,11 @@
                 mutationob.stop();
                 if (pluginPanel != undefined && pluginPanel.element != undefined) {
                     pluginPanel.element.remove();
+                    pluginPanel.destroy();
                 }
-                mutationob.start();
+                setTimeout(() => {
+                    mutationob.start();
+                }, 100);
             });
         }
     }
@@ -466,5 +529,156 @@
             document.documentElement.appendChild(script);
         });
         FetchInterceptor.intercept();
+    }
+    async function getDownloadCredential() {
+        const response = await fetch(`https://play.dl.dlsite.com/api/download/sign/cookie?workno=${location.href.match(/\/work\/(\w+)\//)[1]}`, {
+            method: "GET",
+            headers: {
+                Accept: "*/*",
+                "Accept-Encoding": "gzip, deflate, br",
+                "Accept-Language": "zh-CN,zh;q=0.9",
+            },
+            referrer: "https://play.dlsite.com/",
+            credentials: "include",
+        });
+        return await response.json();
+    }
+
+    async function getDownloadUrls(prefix) {
+        const response = await fetch(`${prefix}ziptree.json`, {
+            referrer: "https://play.dlsite.com/",
+            credentials: "include",
+        });
+        const zipTree = await response.json();
+
+        const result = [];
+
+        const travel = (fileObj, index, path) => {
+            if (fileObj.type === "folder") {
+                fileObj.children.forEach((child, index) => travel(child, index, fileObj.path));
+            }
+            if (fileObj.type === "file" && !fileObj.hashname.endsWith(".pdf")) {
+                result.push({
+                    filename: `${path ? `${path}/` : ""}${fileObj.name}`,
+                    optimized: zipTree.playfile[fileObj.hashname].image.optimized,
+                });
+            }
+        };
+        zipTree.tree.forEach(travel);
+        // console.log(result);
+        return result;
+    }
+
+    function getDecryptedImageData(optimized) {
+        const qv = (t, s) => {
+                // const MersenneTwister = unsafeWindow.module.exports;
+                // const MersenneTwister = window.module.exports;
+                const n = new MersenneTwister(t);
+                for (let r = s.length - 1; r > 0; r--) {
+                    const o = Math.floor(n.random() * (r + 1));
+                    [s[r], s[o]] = [s[o], s[r]];
+                }
+                return s;
+            },
+            Ir = (t, s) => (t >= s ? t % s : t),
+            Lr = (t, s) => (t >= s ? Math.floor(t / s) : 0);
+        const n = {
+                w: Math.ceil(optimized.width / 128),
+                h: Math.ceil(optimized.height / 128),
+            },
+            r = parseInt(optimized.name.substring(5, 12), 16),
+            i = qv(r, [...Array(n.w * n.h).keys()]).map((value, index) => ({
+                sx: 128 * Ir(index, n.w),
+                sy: 128 * Lr(index, n.w),
+                dx: 128 * Ir(value, n.w),
+                dy: 128 * Lr(value, n.w),
+            }));
+        return { sourceCropSize: 128, cropCount: n, coordinates: i };
+    }
+
+    async function imagePuzzle(downloadPrefix, { filename, optimized }) {
+        let canvas = document.createElement("canvas");
+        canvas.width = optimized.width;
+        canvas.height = optimized.height;
+        let ctx = canvas.getContext("2d");
+        let binResponse = await fetch(`${downloadPrefix}optimized/${optimized.name}`, {
+            method: "GET",
+            headers: {
+                Accept: "image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
+                "Accept-Encoding": "gzip, deflate, br",
+                "Accept-Language": "zh-CN,zh;q=0.9",
+                "Sec-Fetch-Dest": "image",
+            },
+            referrer: "https://play.dlsite.com/",
+            credentials: "include",
+        });
+        let blob = await binResponse.blob();
+        const img = new Image();
+        img.src = URL.createObjectURL(blob);
+        return new Promise((resolve) => {
+            img.onload = function () {
+                const { sourceCropSize: sourceCropSize, cropCount: cropCount, coordinates: coordinates } = getDecryptedImageData(optimized),
+                    // g = isSpread && m === 1 ? t[0].width : 0,
+                    g = 0,
+                    // y = t[isSpread && m === 0 ? 1 : 0].height,
+                    // w = isSpread && optimized.height < y ? Math.round((y - optimized.height) / 2) : 0,
+                    w = 0,
+                    x = {
+                        w: img.width - optimized.width,
+                        h: img.height - optimized.height,
+                    };
+                for (const coordinate of coordinates) {
+                    const k = coordinate.dx + sourceCropSize === sourceCropSize * cropCount.w ? sourceCropSize - x.w : sourceCropSize,
+                        O = coordinate.dy + sourceCropSize === sourceCropSize * cropCount.h ? sourceCropSize - x.h : sourceCropSize;
+                    ctx.drawImage(img, coordinate.sx, coordinate.sy, k, O, coordinate.dx + g, coordinate.dy + w, k, O);
+                }
+
+                canvas.toBlob(function (blob) {
+                    resolve({ filename, blob });
+                });
+            };
+        });
+    }
+    function save(mangaName, blobs) {
+        const fileStream = streamSaver.createWriteStream(`${mangaName}.zip`);
+
+        const readableZipStream = new ZIP({
+            start(ctrl) {
+                blobs.forEach(({ blob, filename }, arrayIndex) => {
+                    let file = {
+                        // name: `${mangaName}/${(index + 1).toString().padStart(4, "0")}.jpg`,
+                        // name: `${(index + 1).toString().padStart(4, "0")}.png`,
+                        name: `${filename.split(".")[0]}.png`,
+                        stream: () => blob.stream(),
+                    };
+                    ctrl.enqueue(file);
+                });
+                ctrl.close();
+            },
+        });
+
+        // more optimized
+        if (window.WritableStream && readableZipStream.pipeTo) {
+            return readableZipStream.pipeTo(fileStream).then(() => {
+                console.debug("done writing");
+                pluginPanel.addLog("<b>下载已完成</b>");
+            });
+        }
+
+        // less optimized
+        const writer = fileStream.getWriter();
+        const reader = readableZipStream.getReader();
+        const pump = () => reader.read().then((res) => (res.done ? writer.close() : writer.write(res.value).then(pump)));
+
+        pump();
+    }
+
+    async function getMangaName() {
+        const response = await fetch(`https://play.dlsite.com/api/work/${location.href.match(/\/work\/(\w+)\//)[1]}`, {
+            referrer: "https://play.dlsite.com/",
+            credentials: "include",
+        });
+        const result = await response.json();
+        return result.name["ja_JP"];
     }
 })();
