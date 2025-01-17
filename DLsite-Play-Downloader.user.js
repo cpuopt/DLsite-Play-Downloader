@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         DLsite Play Downloader
 // @namespace    https://github.com/cpuopt/DLsite-Play-Downloader
-// @version      1.7
+// @version      1.7.1
 // @description  在浏览器完成DLsite Play漫画的下载、拼图和保存
 // @author       cpufan
 // @match        https://play.dlsite.com/*
@@ -15,9 +15,9 @@
 // @grant        window.close
 // @grant        GM_addValueChangeListener
 // @grant        GM_removeValueChangeListener
-// @updateURL    https://github.com/cpuopt/DLsite-Play-Downloader/raw/main/DLsite-Play-Downloader.user.js
-// @downloadURL  https://github.com/cpuopt/DLsite-Play-Downloader/raw/main/DLsite-Play-Downloader.user.js
 // @supportURL   https://github.com/cpuopt/DLsite-Play-Downloader/issues
+// @downloadURL https://update.greasyfork.org/scripts/480281/DLsite%20Play%20Downloader.user.js
+// @updateURL https://update.greasyfork.org/scripts/480281/DLsite%20Play%20Downloader.meta.js
 // ==/UserScript==
 
 (function () {
@@ -68,7 +68,7 @@
                 if (artwork != null && artwork.querySelector("button") == null) {
                     self.haveArtwork(artwork);
                 }
-                if (jpegs.length > 0 && document.querySelector("div[class^='_worktree_'] > ul[class^='_breadcrumb_']").querySelector("button") == null) {
+                if (jpegs.length > 0 && document.querySelector("div[class^='_worktree_'] ul").querySelector("button") == null) {
                     self.haveJpegs(jpegs);
                 }
             });
@@ -96,7 +96,7 @@
         }
         haveJpegs(jpegs) {
             this.stop();
-            let button = new JpegsDownloadButton("jpeg-button-down", document.querySelector("div[class^='_worktree_'] > ul[class^='_breadcrumb_']"));
+            let button = new JpegsDownloadButton("jpeg-button-down", document.querySelector("div[class^='_worktree_'] ul"));
             if (pluginPanel == undefined) {
                 mutationob.start();
             }
