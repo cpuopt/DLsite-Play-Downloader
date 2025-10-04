@@ -401,6 +401,8 @@
                 e.stopPropagation(); // 阻止冒泡
 
                 const { url: downloadPrefix, cookies } = await getDownloadCredential();
+                console.log(downloadPrefix);
+
                 const [mangaName, downloadUrls] = await Promise.all([getMangaName(), getDownloadUrls(downloadPrefix)]);
                 const downloadResults = await Promise.all(downloadUrls.map((value) => imagePuzzle(downloadPrefix, value)));
 
