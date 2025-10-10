@@ -13,7 +13,7 @@ export const hookFetchPuzzle = () => {
                     Worker.prototype.postMessage = origPostMessage;
                     resolve({
                         method: "puzzle",
-                        data: ,
+                        data: "",
                     });
                 }
             }
