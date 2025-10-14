@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         dlsite-play-downloader-vue
+// @name         DLsite Play Downloader
 // @namespace    https://github.com/cpuopt/DLsite-Play-Downloader
 // @version      2.0.0
 // @author       cpufan

@@ -11,6 +11,7 @@ export default defineConfig({
     monkey({
       entry: "src/main.ts",
       userscript: {
+        name: "DLsite Play Downloader",
         icon: "https://www.google.com/s2/favicons?sz=64&domain=dlsite.com",
         namespace: "https://github.com/cpuopt/DLsite-Play-Downloader",
         match: ["https://play.dlsite.com/*"],
