@@ -9,4 +9,4 @@ Download comics from DLsite Play in browser.
 ## 使用 Usage
 需进入漫画阅读器界面后使用
 
-<img src="https://greasyfork.s3.us-east-2.amazonaws.com/5ic3sdh6pzjv44jewx5ojq6qfiq3">
+<img src="https://cd.xfan.top/f/N5pHO/QQ%E6%88%AA%E5%9B%BE20251014172134.jpg">
