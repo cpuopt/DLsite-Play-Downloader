@@ -1,7 +1,6 @@
 const c = window.console;
 
 export const origConsole = (() => {
-
     return {
         log: c.log.bind(c),
         warn: c.warn.bind(c),
