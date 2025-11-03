@@ -9,13 +9,13 @@ import { unsafeWindow } from "$";
 
 export const hookXorEnc = () => {
   return new Promise((resolve, reject) => {
-    Promise.all([hookXorKey(), hookEncBinUrl(), hookViewerMeta()]).then(([{ key: encDetectorKey }, { url: binUrl }, { json: viewerMeta }]) => {
+    Promise.all([hookXorKey(), hookEncBinUrl(), hookViewerMeta(), hookApiV2Work()]).then(([{ key: encDetectorKey }, { url: binUrl }, { json: viewerMeta }, { json: apiV2WorkMeta }]) => {
       origConsole.log("viewerMeta ", viewerMeta);
       origConsole.log("xor key ", encDetectorKey);
       origConsole.log("binUrl  ", binUrl);
       const encBinUrls = makeEncBinUrls(binUrl, viewerMeta)
       origConsole.log("encBinUrls  ", encBinUrls.length);
-      const saveName = makeArtworkSaveName(viewerMeta)
+      const saveName = makeArtworkSaveName(viewerMeta, apiV2WorkMeta)
       origConsole.log("makeArtworkSaveName ", saveName);
       resolve({
         method: "xor",
@@ -30,16 +30,29 @@ export const hookXorEnc = () => {
   })
 };
 
-function makeArtworkSaveName(viewerMeta) {
-  let creator = ""
+function makeArtworkSaveName(viewerMeta, apiV2WorkMeta) {
+  console.log(apiV2WorkMeta);
+
+  let creator = undefined
   if (viewerMeta.meta_data.creator?.length > 0) {
     creator = viewerMeta.meta_data.creator.join(" ")
   }
+
+  let apiV2_maker = ""
+  if (apiV2WorkMeta?.maker?.name?.ja_JP) {
+    apiV2_maker = apiV2WorkMeta.maker?.name?.ja_JP
+  }
+
+  let apiV2_name = ""
+  if (apiV2WorkMeta?.name?.ja_JP) {
+    apiV2_name = apiV2WorkMeta?.name?.ja_JP
+  }
+
   let publisher = ""
   if (viewerMeta.meta_data.publisher) {
     publisher = viewerMeta.meta_data.publisher
   }
-  let title = ""
+  let title = undefined
   if (viewerMeta.meta_data.title) {
     title = viewerMeta.meta_data.title
   }
@@ -48,7 +61,7 @@ function makeArtworkSaveName(viewerMeta) {
   if (NO) {
     no = NO
   }
-  return `[${no}] (${publisher})(${creator}) ${title}`
+  return `[${no}] (${publisher})(${creator ?? apiV2_maker}) ${title ?? apiV2_name}`
 }
 
 function extractNumberOrKeepOriginal(str) {
@@ -73,6 +86,8 @@ function makeEncBinUrls(binUrlExample, viewerMeta) {
  */
 const hookXorKey = () => {
   return new Promise((resolve, reject) => {
+
+
     const origPostMessage = Worker.prototype.postMessage;
 
     Worker.prototype.postMessage = function (msg, ...rest) {
@@ -87,12 +102,24 @@ const hookXorKey = () => {
 
       return origPostMessage.call(this, msg, ...rest);
     };
+
+
+    const originalDecrypt = crypto.subtle.decrypt;
+
+    crypto.subtle.decrypt = async function (algorithm, key, data) {
+      const result = await originalDecrypt.call(this, algorithm, key, data);
+      const utf8String = new TextDecoder('utf-8').decode(result);
+      resolve({
+        key: utf8String,
+      })
+      return result;
+    };
   });
 }
 
 const hookEncBinUrl = () => {
   return new Promise((resolve, reject) => {
-    registerRequestHook(/\/((i-\d+)|cover)\.enc\?Policy=/, (json, response, url) => {
+    registerRequestHook(/\/((i-\d+)|cover|\d+)\.enc\?Policy=/, (json, response, url) => {
       resolve({
         url: url,
       });
@@ -110,6 +137,15 @@ const hookViewerMeta = () => {
   });
 }
 
+const hookApiV2Work = () => {
+  return new Promise((resolve, reject) => {
+    registerRequestHook(/\/api\/v2\/work\/.+$/, (json, response, url) => {
+      resolve({
+        json: json,
+      });
+    }, true);
+  });
+}
 
 
 /**
@@ -247,3 +283,33 @@ const downloadAndDecryptToZip = async (files, keyHex, outputZip, concurrency = 3
   });
 };
 
+
+/**
+ *   , Oo = crypto.subtle
+  , DH = {
+    name: "RSA-OAEP",
+    modulusLength: 4096,
+    publicExponent: new Uint8Array([1, 0, 1]),
+    hash: "SHA-256"
+}
+  , HH = {
+    name: "RSA-OAEP"
+}
+  , Bc = e => {
+    const t = new Uint8Array(e);
+    return String.fromCharCode(...Array.from(t))
+}
+  , NH = e => btoa(Bc(e))
+  , QH = e => Uint8Array.from(Array.from(e).map(t => t.charCodeAt(0)))
+  , PH = e => {
+    const t = atob(e);
+    return QH(t)
+}
+  , VH = async e => {
+    const t = await Oo.exportKey("spki", e.publicKey);
+    return NH(t)
+}
+  , TH = async (e, t) => {
+    const r = await Oo.decrypt(HH, e.privateKey, PH(t));
+    return Bc(r)
+ */
