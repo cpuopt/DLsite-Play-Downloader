@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         DLsite Play Downloader
 // @namespace    https://github.com/cpuopt/DLsite-Play-Downloader
-// @version      2.0.1
+// @version      2.0.2
 // @author       cpufan
 // @description  在浏览器完成DLsite Play漫画的下载、拼图或解密和保存
 // @license      MIT
@@ -5769,7 +5769,7 @@ scanMpeg(offset) {
   function makeEncBinUrls(binUrlExample, viewerMeta) {
     const binUrls = [];
     viewerMeta.pages.forEach(({ src }, _i) => {
-      const url = binUrlExample.replace(/\/((i-\d+)|cover)\.enc\b/, `/${src}`);
+      const url = binUrlExample.replace(/\/((i-\d+)|cover|\d+)\.enc\b/, `/${src}`);
       binUrls.push({
         url,
         name: `${_i}-${extractNumberOrKeepOriginal(src.replace(".enc", ""))}`

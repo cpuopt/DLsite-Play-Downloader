@@ -72,7 +72,7 @@ function extractNumberOrKeepOriginal(str) {
 function makeEncBinUrls(binUrlExample, viewerMeta) {
   const binUrls = []
   viewerMeta.pages.forEach(({ src }, _i) => {
-    const url = binUrlExample.replace(/\/((i-\d+)|cover)\.enc\b/, `/${src}`)
+    const url = binUrlExample.replace(/\/((i-\d+)|cover|\d+)\.enc\b/, `/${src}`)
     binUrls.push({
       url: url,
       name: `${_i}-${extractNumberOrKeepOriginal(src.replace(".enc", ""))}`
