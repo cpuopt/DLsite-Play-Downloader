@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         DLsite Play Downloader
 // @namespace    https://github.com/cpuopt/DLsite-Play-Downloader
-// @version      2.0.0
+// @version      2.0.1
 // @author       cpufan
 // @description  在浏览器完成DLsite Play漫画的下载、拼图或解密和保存
 // @license      MIT
@@ -5713,13 +5713,13 @@ scanMpeg(offset) {
   new Set(mimeTypes);
   const hookXorEnc = () => {
     return new Promise((resolve, reject) => {
-      Promise.all([hookXorKey(), hookEncBinUrl(), hookViewerMeta()]).then(([{ key: encDetectorKey }, { url: binUrl }, { json: viewerMeta }]) => {
+      Promise.all([hookXorKey(), hookEncBinUrl(), hookViewerMeta(), hookApiV2Work()]).then(([{ key: encDetectorKey }, { url: binUrl }, { json: viewerMeta }, { json: apiV2WorkMeta }]) => {
         origConsole.log("viewerMeta ", viewerMeta);
         origConsole.log("xor key ", encDetectorKey);
         origConsole.log("binUrl  ", binUrl);
         const encBinUrls = makeEncBinUrls(binUrl, viewerMeta);
         origConsole.log("encBinUrls  ", encBinUrls.length);
-        const saveName = makeArtworkSaveName(viewerMeta);
+        const saveName = makeArtworkSaveName(viewerMeta, apiV2WorkMeta);
         origConsole.log("makeArtworkSaveName ", saveName);
         resolve({
           method: "xor",
@@ -5733,16 +5733,25 @@ scanMpeg(offset) {
       });
     });
   };
-  function makeArtworkSaveName(viewerMeta) {
-    let creator = "";
+  function makeArtworkSaveName(viewerMeta, apiV2WorkMeta) {
+    console.log(apiV2WorkMeta);
+    let creator = void 0;
     if (viewerMeta.meta_data.creator?.length > 0) {
       creator = viewerMeta.meta_data.creator.join(" ");
+    }
+    let apiV2_maker = "";
+    if (apiV2WorkMeta?.maker?.name?.ja_JP) {
+      apiV2_maker = apiV2WorkMeta.maker?.name?.ja_JP;
+    }
+    let apiV2_name = "";
+    if (apiV2WorkMeta?.name?.ja_JP) {
+      apiV2_name = apiV2WorkMeta?.name?.ja_JP;
     }
     let publisher = "";
     if (viewerMeta.meta_data.publisher) {
       publisher = viewerMeta.meta_data.publisher;
     }
-    let title = "";
+    let title = void 0;
     if (viewerMeta.meta_data.title) {
       title = viewerMeta.meta_data.title;
     }
@@ -5751,7 +5760,7 @@ scanMpeg(offset) {
     if (NO) {
       no = NO;
     }
-    return `[${no}] (${publisher})(${creator}) ${title}`;
+    return `[${no}] (${publisher})(${creator ?? apiV2_maker}) ${title ?? apiV2_name}`;
   }
   function extractNumberOrKeepOriginal(str) {
     const match = str.match(/\d+/);
@@ -5782,11 +5791,20 @@ scanMpeg(offset) {
         }
         return origPostMessage.call(this, msg, ...rest);
       };
+      const originalDecrypt = crypto.subtle.decrypt;
+      crypto.subtle.decrypt = async function(algorithm, key, data) {
+        const result = await originalDecrypt.call(this, algorithm, key, data);
+        const utf8String = new TextDecoder("utf-8").decode(result);
+        resolve({
+          key: utf8String
+        });
+        return result;
+      };
     });
   };
   const hookEncBinUrl = () => {
     return new Promise((resolve, reject) => {
-      registerRequestHook(/\/((i-\d+)|cover)\.enc\?Policy=/, (json, response, url) => {
+      registerRequestHook(/\/((i-\d+)|cover|\d+)\.enc\?Policy=/, (json, response, url) => {
         resolve({
           url
         });
@@ -5796,6 +5814,15 @@ scanMpeg(offset) {
   const hookViewerMeta = () => {
     return new Promise((resolve, reject) => {
       registerRequestHook(/\/viewer\-meta\.json\b/, (json, response, url) => {
+        resolve({
+          json
+        });
+      }, true);
+    });
+  };
+  const hookApiV2Work = () => {
+    return new Promise((resolve, reject) => {
+      registerRequestHook(/\/api\/v2\/work\/.+$/, (json, response, url) => {
         resolve({
           json
         });
