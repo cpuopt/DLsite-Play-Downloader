@@ -272,44 +272,105 @@ const downloadAndDecryptToZip = async (files, keyHex, outputZip, concurrency = 3
       resolve({
         save: () => {
           a.click();
-          // 延迟释放 URL，确保下载开始
           setTimeout(() => URL.revokeObjectURL(blobUrl), 1000);
         },
         successCount,
         failCount,
-        blobUrl // 暴露出来便于外部管理
+        blobUrl
       });
     });
   });
 };
 
 
+
+
 /**
- *   , Oo = crypto.subtle
-  , DH = {
-    name: "RSA-OAEP",
-    modulusLength: 4096,
-    publicExponent: new Uint8Array([1, 0, 1]),
-    hash: "SHA-256"
+ * 
+ *   , LC = async e => {
+    const r = new TextEncoder().encode(e)
+      , a = await crypto.subtle.digest("SHA-256", r);
+    return Array.from(new Uint8Array(a)).map(l => l.toString(16).padStart(2, "0")).join("")
 }
-  , HH = {
-    name: "RSA-OAEP"
-}
-  , Bc = e => {
-    const t = new Uint8Array(e);
-    return String.fromCharCode(...Array.from(t))
-}
-  , NH = e => btoa(Bc(e))
-  , QH = e => Uint8Array.from(Array.from(e).map(t => t.charCodeAt(0)))
-  , PH = e => {
-    const t = atob(e);
-    return QH(t)
-}
-  , VH = async e => {
-    const t = await Oo.exportKey("spki", e.publicKey);
-    return NH(t)
-}
-  , TH = async (e, t) => {
-    const r = await Oo.decrypt(HH, e.privateKey, PH(t));
-    return Bc(r)
  */
+
+
+// const DH = {
+//   name: "RSA-OAEP",
+//   modulusLength: 4096,
+//   publicExponent: new Uint8Array([1, 0, 1]),
+//   hash: "SHA-256"
+// };
+
+
+// const FIXED_KEYPAIR = await crypto.subtle.generateKey(DH, true, ["encrypt", "decrypt"]);
+
+// /**
+//  * 使用固定的 RSA 私钥解密 Base64 编码的密文
+//  * @param {string} cipherBase64 - Base64 编码的密文
+//  * @returns {Promise<string>} 解密后的字符串
+//  */
+// async function decryptRSA(cipherBase64) {
+//   const subtle = crypto.subtle;
+//   const algorithm = { name: "RSA-OAEP" };
+
+//   const base64ToBytes = (base64) => {
+//     const binary = atob(base64);
+//     const bytes = new Uint8Array(binary.length);
+//     for (let i = 0; i < binary.length; i++) {
+//       bytes[i] = binary.charCodeAt(i);
+//     }
+//     return bytes;
+//   };
+
+//   const bytesToString = (buffer) => String.fromCharCode(...new Uint8Array(buffer));
+
+//   const decrypted = await subtle.decrypt(algorithm, FIXED_KEYPAIR.privateKey, base64ToBytes(cipherBase64));
+//   return bytesToString(decrypted);
+// }
+
+
+
+// decryptRSA(key).then(r => {
+//   console.log(r);
+
+// })
+
+(function () {
+  const orig = crypto.subtle.generateKey;
+  crypto.subtle.generateKey = async function (algorithm, extractable, usages) {
+    console.log("%c[HOOK] generateKey called", "color: lime;");
+    console.log("algorithm:", algorithm);
+    console.log("extractable:", extractable);
+    console.log("usages:", usages);
+
+    const keyPair = await orig.apply(this, arguments);
+
+    console.log("%c[HOOK] generated keyPair:", "color: cyan;");
+    console.log("publicKey:", keyPair.publicKey);
+    console.log("privateKey:", keyPair.privateKey);
+
+    debugger
+
+    try {
+      const spki = await crypto.subtle.exportKey("spki", keyPair.publicKey);
+      const pkcs8 = await crypto.subtle.exportKey("pkcs8", keyPair.privateKey);
+      const toBase64 = buf => btoa(String.fromCharCode(...new Uint8Array(buf)));
+      console.log("publicKey (SPKI base64):", toBase64(spki));
+      console.log("privateKey (PKCS8 base64):", toBase64(pkcs8));
+    } catch (err) {
+      console.warn("[HOOK] exportKey failed:", err);
+    }
+
+    return keyPair;
+  };
+})();
+
+
+/**
+ * 
+ * "MII***
+publicKey (SPKI base64): 
+请求https://play.dlsite.com/api/v3/viewer/token/BJ****** 的载荷public_key参数
+ */
+
