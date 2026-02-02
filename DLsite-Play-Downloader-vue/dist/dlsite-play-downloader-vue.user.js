@@ -1,13 +1,14 @@
 // ==UserScript==
 // @name         DLsite Play Downloader
 // @namespace    https://github.com/cpuopt/DLsite-Play-Downloader
-// @version      2.0.2
+// @version      2.0.3
 // @author       cpufan
 // @description  在浏览器完成DLsite Play漫画的下载、拼图或解密和保存
 // @license      MIT
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=dlsite.com
 // @supportURL   https://github.com/cpuopt/DLsite-Play-Downloader/issues
 // @match        https://play.dlsite.com/*
+// @match        https://play.comipo.app/*
 // @require      https://cdn.jsdelivr.net/npm/vue@3.5.21/dist/vue.global.prod.js
 // @grant        GM_addStyle
 // @grant        unsafeWindow
@@ -5821,12 +5822,25 @@ scanMpeg(offset) {
     });
   };
   const hookApiV2Work = () => {
-    return new Promise((resolve, reject) => {
-      registerRequestHook(/\/api\/v2\/work\/.+$/, (json, response, url) => {
-        resolve({
-          json
+    return new Promise((resolve) => {
+      let unregisterFns = [];
+      const cleanUpAll = () => {
+        unregisterFns.forEach((unhook) => {
+          if (typeof unhook === "function") unhook();
         });
-      }, true);
+        unregisterFns.length = 0;
+      };
+      const patterns = [
+        /\/api\/v2\/work\/.+$/,
+        /\/api\/comipo\/v2\/work\/.+$/
+      ];
+      patterns.forEach((pattern) => {
+        const unhook = registerRequestHook(pattern, (json) => {
+          cleanUpAll();
+          resolve({ json });
+        }, true);
+        unregisterFns.push(unhook);
+      });
     });
   };
   function xorDecrypt(data, keyHex) {
@@ -5923,10 +5937,34 @@ scanMpeg(offset) {
           successCount,
           failCount,
           blobUrl
-});
+        });
       });
     });
   };
+  (function() {
+    const orig = crypto.subtle.generateKey;
+    crypto.subtle.generateKey = async function(algorithm, extractable, usages) {
+      console.log("%c[HOOK] generateKey called", "color: lime;");
+      console.log("algorithm:", algorithm);
+      console.log("extractable:", extractable);
+      console.log("usages:", usages);
+      const keyPair = await orig.apply(this, arguments);
+      console.log("%c[HOOK] generated keyPair:", "color: cyan;");
+      console.log("publicKey:", keyPair.publicKey);
+      console.log("privateKey:", keyPair.privateKey);
+      debugger;
+      try {
+        const spki = await crypto.subtle.exportKey("spki", keyPair.publicKey);
+        const pkcs8 = await crypto.subtle.exportKey("pkcs8", keyPair.privateKey);
+        const toBase64 = (buf) => btoa(String.fromCharCode(...new Uint8Array(buf)));
+        console.log("publicKey (SPKI base64):", toBase64(spki));
+        console.log("privateKey (PKCS8 base64):", toBase64(pkcs8));
+      } catch (err2) {
+        console.warn("[HOOK] exportKey failed:", err2);
+      }
+      return keyPair;
+    };
+  })();
   function useLog() {
     const log_list = vue.ref([]);
     function add_log(text) {

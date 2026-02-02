@@ -138,14 +138,32 @@ const hookViewerMeta = () => {
 }
 
 const hookApiV2Work = () => {
-  return new Promise((resolve, reject) => {
-    registerRequestHook(/\/api\/v2\/work\/.+$/, (json, response, url) => {
-      resolve({
-        json: json,
+  return new Promise((resolve) => {
+    let unregisterFns = [];
+
+    const cleanUpAll = () => {
+      unregisterFns.forEach(unhook => {
+        if (typeof unhook === 'function') unhook();
       });
-    }, true);
+      unregisterFns.length = 0;
+    };
+
+    const patterns = [
+      /\/api\/v2\/work\/.+$/,
+      /\/api\/comipo\/v2\/work\/.+$/
+    ];
+
+    patterns.forEach(pattern => {
+      const unhook = registerRequestHook(pattern, (json) => {
+        // 触发成功后，先清理所有 Hook
+        cleanUpAll();
+        resolve({ json });
+      }, true);
+
+      unregisterFns.push(unhook);
+    });
   });
-}
+};
 
 
 /**
