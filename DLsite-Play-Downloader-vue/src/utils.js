@@ -1,3 +1,5 @@
+import { origConsole } from "./origConsole";
+
 /**
  * 从形如
  * https://play.dlsite.com/work/BJ366185/viewer
@@ -5,5 +7,5 @@
  * @param url
  */
 export function extractDlsiteId(url) {
-    return url.match(/work\/([A-Z\d]+)\//)?.[1] ?? null;
+    return url.match(/work\/([A-Z\d]+)\//)?.[1] ?? url.match(/\/viewer\/free\/([A-Z\d]+)/)?.[1] ?? null;
 }

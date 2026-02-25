@@ -71,12 +71,25 @@ function extractNumberOrKeepOriginal(str) {
 
 function makeEncBinUrls(binUrlExample, viewerMeta) {
   const binUrls = []
+
+  const pattern = /\/((i-\d+)|cover|\d+)\.enc\b/;
+  const matched = pattern.test(binUrlExample);
+
   viewerMeta.pages.forEach(({ src }, _i) => {
-    const url = binUrlExample.replace(/\/((i-\d+)|cover|\d+)\.enc\b/, `/${src}`)
-    binUrls.push({
-      url: url,
-      name: `${_i}-${extractNumberOrKeepOriginal(src.replace(".enc", ""))}`
-    })
+    let url;
+    let name;
+
+    if (matched) {
+      url = binUrlExample.replace(pattern, `/${src}`);
+      name = `${_i}-${extractNumberOrKeepOriginal(
+        src.replace(".enc", "")
+      )}`;
+    } else {
+      url = binUrlExample.replace(/\/[^\/]+.enc/, `/${src}`);
+      name = src.replace(".enc", "")
+    }
+
+    binUrls.push({ url, name });
   });
   return binUrls
 }
@@ -119,7 +132,7 @@ const hookXorKey = () => {
 
 const hookEncBinUrl = () => {
   return new Promise((resolve, reject) => {
-    registerRequestHook(/\/((i-\d+)|cover|\d+)\.enc\?Policy=/, (json, response, url) => {
+    registerRequestHook(/\/((i-\d+)|cover|\d+|[^\/]+)\.enc\?Policy=/, (json, response, url) => {
       resolve({
         url: url,
       });
