@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         DLsite Play Downloader
 // @namespace    https://github.com/cpuopt/DLsite-Play-Downloader
-// @version      2.0.3
+// @version      2.1.0
 // @author       cpufan
 // @description  在浏览器完成DLsite Play漫画的下载、拼图或解密和保存
 // @license      MIT
@@ -1609,7 +1609,7 @@ var _sfc_main150 = vue.defineComponent({
     }
   }
   function extractDlsiteId(url) {
-    return url.match(/work\/([A-Z\d]+)\//)?.[1] ?? null;
+    return url.match(/work\/([A-Z\d]+)\//)?.[1] ?? url.match(/\/viewer\/free\/([A-Z\d]+)/)?.[1] ?? null;
   }
   const WINDOWS_1252_EXTRA = {
     128: "€",
@@ -5769,12 +5769,21 @@ scanMpeg(offset) {
   }
   function makeEncBinUrls(binUrlExample, viewerMeta) {
     const binUrls = [];
+    const pattern = /\/((i-\d+)|cover|\d+)\.enc\b/;
+    const matched = pattern.test(binUrlExample);
     viewerMeta.pages.forEach(({ src }, _i) => {
-      const url = binUrlExample.replace(/\/((i-\d+)|cover|\d+)\.enc\b/, `/${src}`);
-      binUrls.push({
-        url,
-        name: `${_i}-${extractNumberOrKeepOriginal(src.replace(".enc", ""))}`
-      });
+      let url;
+      let name;
+      if (matched) {
+        url = binUrlExample.replace(pattern, `/${src}`);
+        name = `${_i}-${extractNumberOrKeepOriginal(
+        src.replace(".enc", "")
+      )}`;
+      } else {
+        url = binUrlExample.replace(/\/[^\/]+.enc/, `/${src}`);
+        name = src.replace(".enc", "");
+      }
+      binUrls.push({ url, name });
     });
     return binUrls;
   }
@@ -5805,7 +5814,7 @@ scanMpeg(offset) {
   };
   const hookEncBinUrl = () => {
     return new Promise((resolve, reject) => {
-      registerRequestHook(/\/((i-\d+)|cover|\d+)\.enc\?Policy=/, (json, response, url) => {
+      registerRequestHook(/\/((i-\d+)|cover|\d+|[^\/]+)\.enc\?Policy=/, (json, response, url) => {
         resolve({
           url
         });
@@ -6148,13 +6157,16 @@ scanMpeg(offset) {
     }
   };
   const App = _export_sfc(_sfc_main, [["__scopeId", "data-v-9122b10d"]]);
-  vue.createApp(App).mount(
-    (() => {
-      const app = document.createElement("div");
-      app.className = "dlsite-play-downloader-vue";
-      document.body.append(app);
-      return app;
-    })()
-  );
+  function mountApp() {
+    if (!document.body) {
+      requestAnimationFrame(mountApp);
+      return;
+    }
+    const container = document.createElement("div");
+    container.className = "dlsite-play-downloader-vue";
+    document.body.appendChild(container);
+    vue.createApp(App).mount(container);
+  }
+  mountApp();
 
 })(Vue);
