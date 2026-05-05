@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         DLsite Play Downloader
 // @namespace    https://github.com/cpuopt/DLsite-Play-Downloader
-// @version      2.1.0
+// @version      2.2.0
 // @author       cpufan
 // @description  在浏览器完成DLsite Play漫画的下载、拼图或解密和保存
 // @license      MIT
@@ -20,7 +20,7 @@
 
   const d=new Set;const importCSS = async e=>{d.has(e)||(d.add(e),(t=>{typeof GM_addStyle=="function"?GM_addStyle(t):document.head.appendChild(document.createElement("style")).append(t);})(e));};
 
-  importCSS(" .plugin-area[data-v-9122b10d]{position:fixed;right:0;top:50%;padding:1rem;transform:translateY(-50%);display:flex;row-gap:1rem;flex-direction:column;background:#fff3;border-radius:16px;backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);box-shadow:0 8px 30px #0000004d;transition:transform .6s ease-in-out}.plugin-area[hide=true][data-v-9122b10d]{transform:translateY(-50%) translate(95%)}.title[data-v-9122b10d]{width:100%;text-align:center;color:var(--surface-on-surface-primary);font-weight:700;-webkit-user-select:none;user-select:none}.button-area[data-v-9122b10d]{display:flex;row-gap:1rem;flex-direction:column}.log-area[data-v-9122b10d]{width:200px;height:100px;background-color:#00000080;border-radius:4px;display:flex;flex-direction:column;row-gap:.5rem;overflow:hidden;overflow-y:auto;flex-direction:column-reverse}.log-line[data-v-9122b10d]{line-break:anywhere} ");
+  importCSS(" .plugin-area[data-v-f972eb09]{position:fixed;right:0;top:50%;padding:1rem;transform:translateY(-50%);display:flex;row-gap:1rem;flex-direction:column;background:#fff3;border-radius:16px;backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);box-shadow:0 8px 30px #0000004d;transition:transform .6s ease-in-out}.plugin-area[hide=true][data-v-f972eb09]{transform:translateY(-50%) translate(95%)}.title[data-v-f972eb09]{width:100%;text-align:center;color:var(--surface-on-surface-primary);font-weight:700;-webkit-user-select:none;user-select:none}.button-area[data-v-f972eb09]{display:flex;row-gap:1rem;flex-direction:column}.log-area[data-v-f972eb09]{width:200px;height:100px;background-color:#00000080;border-radius:4px;display:flex;flex-direction:column;row-gap:.5rem;overflow:hidden;overflow-y:auto;flex-direction:column-reverse}.log-line[data-v-f972eb09]{line-break:anywhere} ");
 
   const styleCss = ".dlsite-play-downloader-vue{position:fixed;z-index:9999}";
   importCSS(styleCss);
@@ -1517,642 +1517,6 @@ var _sfc_main150 = vue.defineComponent({
   importCSS(baseCss);
   const elButtonCss = '.el-button{--el-button-font-weight:var(--el-font-weight-primary);--el-button-border-color:var(--el-border-color);--el-button-bg-color:var(--el-fill-color-blank);--el-button-text-color:var(--el-text-color-regular);--el-button-disabled-text-color:var(--el-disabled-text-color);--el-button-disabled-bg-color:var(--el-fill-color-blank);--el-button-disabled-border-color:var(--el-border-color-light);--el-button-divide-border-color:rgba(255,255,255,.5);--el-button-hover-text-color:var(--el-color-primary);--el-button-hover-bg-color:var(--el-color-primary-light-9);--el-button-hover-border-color:var(--el-color-primary-light-7);--el-button-active-text-color:var(--el-button-hover-text-color);--el-button-active-border-color:var(--el-color-primary);--el-button-active-bg-color:var(--el-button-hover-bg-color);--el-button-outline-color:var(--el-color-primary-light-5);--el-button-hover-link-text-color:var(--el-text-color-secondary);--el-button-active-color:var(--el-text-color-primary);align-items:center;-webkit-appearance:none;background-color:var(--el-button-bg-color);border:var(--el-border);border-color:var(--el-button-border-color);box-sizing:border-box;color:var(--el-button-text-color);cursor:pointer;display:inline-flex;font-weight:var(--el-button-font-weight);height:32px;justify-content:center;line-height:1;outline:none;text-align:center;transition:.1s;-webkit-user-select:none;-moz-user-select:none;user-select:none;vertical-align:middle;white-space:nowrap}.el-button:hover{background-color:var(--el-button-hover-bg-color);border-color:var(--el-button-hover-border-color);color:var(--el-button-hover-text-color);outline:none}.el-button:active{background-color:var(--el-button-active-bg-color);border-color:var(--el-button-active-border-color);color:var(--el-button-active-text-color);outline:none}.el-button:focus-visible{outline:2px solid var(--el-button-outline-color);outline-offset:1px;transition:outline-offset 0s,outline 0s}.el-button>span{align-items:center;display:inline-flex}.el-button+.el-button{margin-left:12px}.el-button{border-radius:var(--el-border-radius-base);font-size:var(--el-font-size-base)}.el-button,.el-button.is-round{padding:8px 15px}.el-button::-moz-focus-inner{border:0}.el-button [class*=el-icon]+span{margin-left:6px}.el-button [class*=el-icon] svg{vertical-align:bottom}.el-button.is-plain{--el-button-hover-text-color:var(--el-color-primary);--el-button-hover-bg-color:var(--el-fill-color-blank);--el-button-hover-border-color:var(--el-color-primary)}.el-button.is-active{background-color:var(--el-button-active-bg-color);border-color:var(--el-button-active-border-color);color:var(--el-button-active-text-color);outline:none}.el-button.is-disabled,.el-button.is-disabled:hover{background-color:var(--el-button-disabled-bg-color);background-image:none;border-color:var(--el-button-disabled-border-color);color:var(--el-button-disabled-text-color);cursor:not-allowed}.el-button.is-loading{pointer-events:none;position:relative}.el-button.is-loading:before{background-color:var(--el-mask-color-extra-light);border-radius:inherit;content:"";inset:-1px;pointer-events:none;position:absolute;z-index:1}.el-button.is-round{border-radius:var(--el-border-radius-round)}.el-button.is-circle{border-radius:50%;padding:8px;width:32px}.el-button.is-text{background-color:transparent;border:0 solid transparent;color:var(--el-button-text-color)}.el-button.is-text.is-disabled{background-color:transparent!important;color:var(--el-button-disabled-text-color)}.el-button.is-text:not(.is-disabled):hover{background-color:var(--el-fill-color-light)}.el-button.is-text:not(.is-disabled):focus-visible{outline:2px solid var(--el-button-outline-color);outline-offset:1px;transition:outline-offset 0s,outline 0s}.el-button.is-text:not(.is-disabled):active{background-color:var(--el-fill-color)}.el-button.is-text:not(.is-disabled).is-has-bg{background-color:var(--el-fill-color-light)}.el-button.is-text:not(.is-disabled).is-has-bg:hover{background-color:var(--el-fill-color)}.el-button.is-text:not(.is-disabled).is-has-bg:active{background-color:var(--el-fill-color-dark)}.el-button__text--expand{letter-spacing:.3em;margin-right:-.3em}.el-button.is-link{background:transparent;border-color:transparent;color:var(--el-button-text-color);height:auto;padding:2px}.el-button.is-link:hover{color:var(--el-button-hover-link-text-color)}.el-button.is-link.is-disabled{background-color:transparent!important;border-color:transparent!important;color:var(--el-button-disabled-text-color)}.el-button.is-link:not(.is-disabled):active,.el-button.is-link:not(.is-disabled):hover{background-color:transparent;border-color:transparent}.el-button.is-link:not(.is-disabled):active{color:var(--el-button-active-color)}.el-button--text{background:transparent;border-color:transparent;color:var(--el-color-primary);padding-left:0;padding-right:0}.el-button--text.is-disabled{background-color:transparent!important;border-color:transparent!important;color:var(--el-button-disabled-text-color)}.el-button--text:not(.is-disabled):hover{background-color:transparent;border-color:transparent;color:var(--el-color-primary-light-3)}.el-button--text:not(.is-disabled):active{background-color:transparent;border-color:transparent;color:var(--el-color-primary-dark-2)}.el-button__link--expand{letter-spacing:.3em;margin-right:-.3em}.el-button--primary{--el-button-text-color:var(--el-color-white);--el-button-bg-color:var(--el-color-primary);--el-button-border-color:var(--el-color-primary);--el-button-outline-color:var(--el-color-primary-light-5);--el-button-active-color:var(--el-color-primary-dark-2);--el-button-hover-text-color:var(--el-color-white);--el-button-hover-link-text-color:var(--el-color-primary-light-5);--el-button-hover-bg-color:var(--el-color-primary-light-3);--el-button-hover-border-color:var(--el-color-primary-light-3);--el-button-active-bg-color:var(--el-color-primary-dark-2);--el-button-active-border-color:var(--el-color-primary-dark-2);--el-button-disabled-text-color:var(--el-color-white);--el-button-disabled-bg-color:var(--el-color-primary-light-5);--el-button-disabled-border-color:var(--el-color-primary-light-5)}.el-button--primary.is-link,.el-button--primary.is-plain,.el-button--primary.is-text{--el-button-text-color:var(--el-color-primary);--el-button-bg-color:var(--el-color-primary-light-9);--el-button-border-color:var(--el-color-primary-light-5);--el-button-hover-text-color:var(--el-color-white);--el-button-hover-bg-color:var(--el-color-primary);--el-button-hover-border-color:var(--el-color-primary);--el-button-active-text-color:var(--el-color-white)}.el-button--primary.is-link.is-disabled,.el-button--primary.is-link.is-disabled:active,.el-button--primary.is-link.is-disabled:focus,.el-button--primary.is-link.is-disabled:hover,.el-button--primary.is-plain.is-disabled,.el-button--primary.is-plain.is-disabled:active,.el-button--primary.is-plain.is-disabled:focus,.el-button--primary.is-plain.is-disabled:hover,.el-button--primary.is-text.is-disabled,.el-button--primary.is-text.is-disabled:active,.el-button--primary.is-text.is-disabled:focus,.el-button--primary.is-text.is-disabled:hover{background-color:var(--el-color-primary-light-9);border-color:var(--el-color-primary-light-8);color:var(--el-color-primary-light-5)}.el-button--success{--el-button-text-color:var(--el-color-white);--el-button-bg-color:var(--el-color-success);--el-button-border-color:var(--el-color-success);--el-button-outline-color:var(--el-color-success-light-5);--el-button-active-color:var(--el-color-success-dark-2);--el-button-hover-text-color:var(--el-color-white);--el-button-hover-link-text-color:var(--el-color-success-light-5);--el-button-hover-bg-color:var(--el-color-success-light-3);--el-button-hover-border-color:var(--el-color-success-light-3);--el-button-active-bg-color:var(--el-color-success-dark-2);--el-button-active-border-color:var(--el-color-success-dark-2);--el-button-disabled-text-color:var(--el-color-white);--el-button-disabled-bg-color:var(--el-color-success-light-5);--el-button-disabled-border-color:var(--el-color-success-light-5)}.el-button--success.is-link,.el-button--success.is-plain,.el-button--success.is-text{--el-button-text-color:var(--el-color-success);--el-button-bg-color:var(--el-color-success-light-9);--el-button-border-color:var(--el-color-success-light-5);--el-button-hover-text-color:var(--el-color-white);--el-button-hover-bg-color:var(--el-color-success);--el-button-hover-border-color:var(--el-color-success);--el-button-active-text-color:var(--el-color-white)}.el-button--success.is-link.is-disabled,.el-button--success.is-link.is-disabled:active,.el-button--success.is-link.is-disabled:focus,.el-button--success.is-link.is-disabled:hover,.el-button--success.is-plain.is-disabled,.el-button--success.is-plain.is-disabled:active,.el-button--success.is-plain.is-disabled:focus,.el-button--success.is-plain.is-disabled:hover,.el-button--success.is-text.is-disabled,.el-button--success.is-text.is-disabled:active,.el-button--success.is-text.is-disabled:focus,.el-button--success.is-text.is-disabled:hover{background-color:var(--el-color-success-light-9);border-color:var(--el-color-success-light-8);color:var(--el-color-success-light-5)}.el-button--warning{--el-button-text-color:var(--el-color-white);--el-button-bg-color:var(--el-color-warning);--el-button-border-color:var(--el-color-warning);--el-button-outline-color:var(--el-color-warning-light-5);--el-button-active-color:var(--el-color-warning-dark-2);--el-button-hover-text-color:var(--el-color-white);--el-button-hover-link-text-color:var(--el-color-warning-light-5);--el-button-hover-bg-color:var(--el-color-warning-light-3);--el-button-hover-border-color:var(--el-color-warning-light-3);--el-button-active-bg-color:var(--el-color-warning-dark-2);--el-button-active-border-color:var(--el-color-warning-dark-2);--el-button-disabled-text-color:var(--el-color-white);--el-button-disabled-bg-color:var(--el-color-warning-light-5);--el-button-disabled-border-color:var(--el-color-warning-light-5)}.el-button--warning.is-link,.el-button--warning.is-plain,.el-button--warning.is-text{--el-button-text-color:var(--el-color-warning);--el-button-bg-color:var(--el-color-warning-light-9);--el-button-border-color:var(--el-color-warning-light-5);--el-button-hover-text-color:var(--el-color-white);--el-button-hover-bg-color:var(--el-color-warning);--el-button-hover-border-color:var(--el-color-warning);--el-button-active-text-color:var(--el-color-white)}.el-button--warning.is-link.is-disabled,.el-button--warning.is-link.is-disabled:active,.el-button--warning.is-link.is-disabled:focus,.el-button--warning.is-link.is-disabled:hover,.el-button--warning.is-plain.is-disabled,.el-button--warning.is-plain.is-disabled:active,.el-button--warning.is-plain.is-disabled:focus,.el-button--warning.is-plain.is-disabled:hover,.el-button--warning.is-text.is-disabled,.el-button--warning.is-text.is-disabled:active,.el-button--warning.is-text.is-disabled:focus,.el-button--warning.is-text.is-disabled:hover{background-color:var(--el-color-warning-light-9);border-color:var(--el-color-warning-light-8);color:var(--el-color-warning-light-5)}.el-button--danger{--el-button-text-color:var(--el-color-white);--el-button-bg-color:var(--el-color-danger);--el-button-border-color:var(--el-color-danger);--el-button-outline-color:var(--el-color-danger-light-5);--el-button-active-color:var(--el-color-danger-dark-2);--el-button-hover-text-color:var(--el-color-white);--el-button-hover-link-text-color:var(--el-color-danger-light-5);--el-button-hover-bg-color:var(--el-color-danger-light-3);--el-button-hover-border-color:var(--el-color-danger-light-3);--el-button-active-bg-color:var(--el-color-danger-dark-2);--el-button-active-border-color:var(--el-color-danger-dark-2);--el-button-disabled-text-color:var(--el-color-white);--el-button-disabled-bg-color:var(--el-color-danger-light-5);--el-button-disabled-border-color:var(--el-color-danger-light-5)}.el-button--danger.is-link,.el-button--danger.is-plain,.el-button--danger.is-text{--el-button-text-color:var(--el-color-danger);--el-button-bg-color:var(--el-color-danger-light-9);--el-button-border-color:var(--el-color-danger-light-5);--el-button-hover-text-color:var(--el-color-white);--el-button-hover-bg-color:var(--el-color-danger);--el-button-hover-border-color:var(--el-color-danger);--el-button-active-text-color:var(--el-color-white)}.el-button--danger.is-link.is-disabled,.el-button--danger.is-link.is-disabled:active,.el-button--danger.is-link.is-disabled:focus,.el-button--danger.is-link.is-disabled:hover,.el-button--danger.is-plain.is-disabled,.el-button--danger.is-plain.is-disabled:active,.el-button--danger.is-plain.is-disabled:focus,.el-button--danger.is-plain.is-disabled:hover,.el-button--danger.is-text.is-disabled,.el-button--danger.is-text.is-disabled:active,.el-button--danger.is-text.is-disabled:focus,.el-button--danger.is-text.is-disabled:hover{background-color:var(--el-color-danger-light-9);border-color:var(--el-color-danger-light-8);color:var(--el-color-danger-light-5)}.el-button--info{--el-button-text-color:var(--el-color-white);--el-button-bg-color:var(--el-color-info);--el-button-border-color:var(--el-color-info);--el-button-outline-color:var(--el-color-info-light-5);--el-button-active-color:var(--el-color-info-dark-2);--el-button-hover-text-color:var(--el-color-white);--el-button-hover-link-text-color:var(--el-color-info-light-5);--el-button-hover-bg-color:var(--el-color-info-light-3);--el-button-hover-border-color:var(--el-color-info-light-3);--el-button-active-bg-color:var(--el-color-info-dark-2);--el-button-active-border-color:var(--el-color-info-dark-2);--el-button-disabled-text-color:var(--el-color-white);--el-button-disabled-bg-color:var(--el-color-info-light-5);--el-button-disabled-border-color:var(--el-color-info-light-5)}.el-button--info.is-link,.el-button--info.is-plain,.el-button--info.is-text{--el-button-text-color:var(--el-color-info);--el-button-bg-color:var(--el-color-info-light-9);--el-button-border-color:var(--el-color-info-light-5);--el-button-hover-text-color:var(--el-color-white);--el-button-hover-bg-color:var(--el-color-info);--el-button-hover-border-color:var(--el-color-info);--el-button-active-text-color:var(--el-color-white)}.el-button--info.is-link.is-disabled,.el-button--info.is-link.is-disabled:active,.el-button--info.is-link.is-disabled:focus,.el-button--info.is-link.is-disabled:hover,.el-button--info.is-plain.is-disabled,.el-button--info.is-plain.is-disabled:active,.el-button--info.is-plain.is-disabled:focus,.el-button--info.is-plain.is-disabled:hover,.el-button--info.is-text.is-disabled,.el-button--info.is-text.is-disabled:active,.el-button--info.is-text.is-disabled:focus,.el-button--info.is-text.is-disabled:hover{background-color:var(--el-color-info-light-9);border-color:var(--el-color-info-light-8);color:var(--el-color-info-light-5)}.el-button--large{--el-button-size:40px;height:var(--el-button-size)}.el-button--large [class*=el-icon]+span{margin-left:8px}.el-button--large{border-radius:var(--el-border-radius-base);font-size:var(--el-font-size-base);padding:12px 19px}.el-button--large.is-round{padding:12px 19px}.el-button--large.is-circle{padding:12px;width:var(--el-button-size)}.el-button--small{--el-button-size:24px;height:var(--el-button-size)}.el-button--small [class*=el-icon]+span{margin-left:4px}.el-button--small{border-radius:calc(var(--el-border-radius-base) - 1px);font-size:12px;padding:5px 11px}.el-button--small.is-round{padding:5px 11px}.el-button--small.is-circle{padding:5px;width:var(--el-button-size)}';
   importCSS(elButtonCss);
-  var _unsafeWindow = (() => typeof unsafeWindow != "undefined" ? unsafeWindow : void 0)();
-  const c = window.console;
-  const origConsole = (() => {
-    return {
-      log: c.log.bind(c),
-      warn: c.warn.bind(c),
-      info: c.info.bind(c),
-      error: c.error.bind(c),
-      debug: c.debug.bind(c)
-    };
-  })();
-  const origFetch = _unsafeWindow.fetch;
-  const hooks = [];
-  const registerRequestHook = (pattern, callback, once = false) => {
-    hooks.push({ pattern, callback, once });
-    origConsole.log("[hookRequest] 注册 hook:", pattern, once ? "(once)" : "");
-  };
-  if (!_unsafeWindow.__requestHooked__) {
-    _unsafeWindow.__requestHooked__ = true;
-    _unsafeWindow.fetch = async (...args) => {
-      const [resource] = args;
-      const url = typeof resource === "string" ? resource : resource.url;
-      const matchedHooks = hooks.filter((h) => h.pattern.test(url));
-      if (matchedHooks.length === 0) return origFetch(...args);
-      origConsole.log("[hookRequest] 捕获 fetch 请求：", url);
-      const response = await origFetch(...args);
-      const cloned = response.clone();
-      matchedHooks.forEach((h) => {
-        cloned.clone().json().then(
-          (json) => {
-            try {
-              h.callback(json, response, url, "fetch");
-            } catch (err2) {
-              origConsole.error("[hookRequest] fetch 回调错误:", err2);
-            }
-            if (h.once) removeHook(h);
-          },
-          () => {
-          }
-        );
-      });
-      return response;
-    };
-    const OrigXHR = _unsafeWindow.XMLHttpRequest;
-    class HookedXHR extends OrigXHR {
-      constructor() {
-        super();
-        this._url = null;
-        const origOpen = this.open;
-        this.open = function(method, url, ...rest) {
-          this._url = url;
-          return origOpen.call(this, method, url, ...rest);
-        };
-        const origSend = this.send;
-        this.send = function(...args) {
-          this.addEventListener("load", () => {
-            try {
-              const matchedHooks = hooks.filter((h) => h.pattern.test(this._url));
-              if (matchedHooks.length === 0) return;
-              origConsole.log("[hookRequest] 捕获 XHR 请求：", this._url);
-              let json = null;
-              try {
-                json = JSON.parse(this.responseText);
-              } catch {
-              }
-              matchedHooks.forEach((h) => {
-                try {
-                  h.callback(json, this, this._url, "xhr");
-                } catch (err2) {
-                  origConsole.error("[hookRequest] xhr 回调错误:", err2);
-                }
-                if (h.once) removeHook(h);
-              });
-            } catch (err2) {
-              origConsole.error("[hookRequest] XHR 处理错误:", err2);
-            }
-          });
-          return origSend.apply(this, args);
-        };
-      }
-    }
-    _unsafeWindow.XMLHttpRequest = HookedXHR;
-    origConsole.log("[hookRequest] 已挂载 fetch + XHR hook");
-  }
-  function removeHook(hookObj) {
-    const index = hooks.indexOf(hookObj);
-    if (index !== -1) {
-      hooks.splice(index, 1);
-      origConsole.log("[hookRequest] 已移除一次性 hook:", hookObj.pattern);
-    }
-  }
-  function extractDlsiteId(url) {
-    return url.match(/work\/([A-Z\d]+)\//)?.[1] ?? url.match(/\/viewer\/free\/([A-Z\d]+)/)?.[1] ?? null;
-  }
-  const WINDOWS_1252_EXTRA = {
-    128: "€",
-    130: "‚",
-    131: "ƒ",
-    132: "„",
-    133: "…",
-    134: "†",
-    135: "‡",
-    136: "ˆ",
-    137: "‰",
-    138: "Š",
-    139: "‹",
-    140: "Œ",
-    142: "Ž",
-    145: "‘",
-    146: "’",
-    147: "“",
-    148: "”",
-    149: "•",
-    150: "–",
-    151: "—",
-    152: "˜",
-    153: "™",
-    154: "š",
-    155: "›",
-    156: "œ",
-    158: "ž",
-    159: "Ÿ"
-  };
-  for (const [code, char] of Object.entries(WINDOWS_1252_EXTRA)) {
-  }
-  function textDecode(bytes, encoding = "utf-8") {
-    switch (encoding.toLowerCase()) {
-      case "utf-8":
-      case "utf8":
-        if (typeof globalThis.TextDecoder !== "undefined") {
-          return new globalThis.TextDecoder("utf-8").decode(bytes);
-        }
-        return decodeUTF8(bytes);
-      case "utf-16le":
-        return decodeUTF16LE(bytes);
-      case "ascii":
-        return decodeASCII(bytes);
-      case "latin1":
-      case "iso-8859-1":
-        return decodeLatin1(bytes);
-      case "windows-1252":
-        return decodeWindows1252(bytes);
-      default:
-        throw new RangeError(`Encoding '${encoding}' not supported`);
-    }
-  }
-  function decodeUTF8(bytes) {
-    let out = "";
-    let i = 0;
-    while (i < bytes.length) {
-      const b1 = bytes[i++];
-      if (b1 < 128) {
-        out += String.fromCharCode(b1);
-      } else if (b1 < 224) {
-        const b2 = bytes[i++] & 63;
-        out += String.fromCharCode((b1 & 31) << 6 | b2);
-      } else if (b1 < 240) {
-        const b2 = bytes[i++] & 63;
-        const b3 = bytes[i++] & 63;
-        out += String.fromCharCode((b1 & 15) << 12 | b2 << 6 | b3);
-      } else {
-        const b2 = bytes[i++] & 63;
-        const b3 = bytes[i++] & 63;
-        const b4 = bytes[i++] & 63;
-        let cp = (b1 & 7) << 18 | b2 << 12 | b3 << 6 | b4;
-        cp -= 65536;
-        out += String.fromCharCode(55296 + (cp >> 10 & 1023), 56320 + (cp & 1023));
-      }
-    }
-    return out;
-  }
-  function decodeUTF16LE(bytes) {
-    let out = "";
-    for (let i = 0; i < bytes.length; i += 2) {
-      out += String.fromCharCode(bytes[i] | bytes[i + 1] << 8);
-    }
-    return out;
-  }
-  function decodeASCII(bytes) {
-    return String.fromCharCode(...bytes.map((b) => b & 127));
-  }
-  function decodeLatin1(bytes) {
-    return String.fromCharCode(...bytes);
-  }
-  function decodeWindows1252(bytes) {
-    let out = "";
-    for (const b of bytes) {
-      if (b >= 128 && b <= 159 && WINDOWS_1252_EXTRA[b]) {
-        out += WINDOWS_1252_EXTRA[b];
-      } else {
-        out += String.fromCharCode(b);
-      }
-    }
-    return out;
-  }
-  function dv(array) {
-    return new DataView(array.buffer, array.byteOffset);
-  }
-  const UINT8 = {
-    len: 1,
-    get(array, offset) {
-      return dv(array).getUint8(offset);
-    },
-    put(array, offset, value) {
-      dv(array).setUint8(offset, value);
-      return offset + 1;
-    }
-  };
-  const UINT16_LE = {
-    len: 2,
-    get(array, offset) {
-      return dv(array).getUint16(offset, true);
-    },
-    put(array, offset, value) {
-      dv(array).setUint16(offset, value, true);
-      return offset + 2;
-    }
-  };
-  const UINT16_BE = {
-    len: 2,
-    get(array, offset) {
-      return dv(array).getUint16(offset);
-    },
-    put(array, offset, value) {
-      dv(array).setUint16(offset, value);
-      return offset + 2;
-    }
-  };
-  const UINT32_LE = {
-    len: 4,
-    get(array, offset) {
-      return dv(array).getUint32(offset, true);
-    },
-    put(array, offset, value) {
-      dv(array).setUint32(offset, value, true);
-      return offset + 4;
-    }
-  };
-  const UINT32_BE = {
-    len: 4,
-    get(array, offset) {
-      return dv(array).getUint32(offset);
-    },
-    put(array, offset, value) {
-      dv(array).setUint32(offset, value);
-      return offset + 4;
-    }
-  };
-  const INT32_BE = {
-    len: 4,
-    get(array, offset) {
-      return dv(array).getInt32(offset);
-    },
-    put(array, offset, value) {
-      dv(array).setInt32(offset, value);
-      return offset + 4;
-    }
-  };
-  const UINT64_LE = {
-    len: 8,
-    get(array, offset) {
-      return dv(array).getBigUint64(offset, true);
-    },
-    put(array, offset, value) {
-      dv(array).setBigUint64(offset, value, true);
-      return offset + 8;
-    }
-  };
-  class StringType {
-    constructor(len, encoding) {
-      this.len = len;
-      this.encoding = encoding;
-    }
-    get(data, offset = 0) {
-      const bytes = data.subarray(offset, offset + this.len);
-      return textDecode(bytes, this.encoding);
-    }
-  }
-  const defaultMessages = "End-Of-Stream";
-  class EndOfStreamError extends Error {
-    constructor() {
-      super(defaultMessages);
-      this.name = "EndOfStreamError";
-    }
-  }
-  class AbortError extends Error {
-    constructor(message = "The operation was aborted") {
-      super(message);
-      this.name = "AbortError";
-    }
-  }
-  class AbstractStreamReader {
-    constructor() {
-      this.endOfStream = false;
-      this.interrupted = false;
-      this.peekQueue = [];
-    }
-    async peek(uint8Array, mayBeLess = false) {
-      const bytesRead = await this.read(uint8Array, mayBeLess);
-      this.peekQueue.push(uint8Array.subarray(0, bytesRead));
-      return bytesRead;
-    }
-    async read(buffer, mayBeLess = false) {
-      if (buffer.length === 0) {
-        return 0;
-      }
-      let bytesRead = this.readFromPeekBuffer(buffer);
-      if (!this.endOfStream) {
-        bytesRead += await this.readRemainderFromStream(buffer.subarray(bytesRead), mayBeLess);
-      }
-      if (bytesRead === 0 && !mayBeLess) {
-        throw new EndOfStreamError();
-      }
-      return bytesRead;
-    }
-readFromPeekBuffer(buffer) {
-      let remaining = buffer.length;
-      let bytesRead = 0;
-      while (this.peekQueue.length > 0 && remaining > 0) {
-        const peekData = this.peekQueue.pop();
-        if (!peekData)
-          throw new Error("peekData should be defined");
-        const lenCopy = Math.min(peekData.length, remaining);
-        buffer.set(peekData.subarray(0, lenCopy), bytesRead);
-        bytesRead += lenCopy;
-        remaining -= lenCopy;
-        if (lenCopy < peekData.length) {
-          this.peekQueue.push(peekData.subarray(lenCopy));
-        }
-      }
-      return bytesRead;
-    }
-    async readRemainderFromStream(buffer, mayBeLess) {
-      let bytesRead = 0;
-      while (bytesRead < buffer.length && !this.endOfStream) {
-        if (this.interrupted) {
-          throw new AbortError();
-        }
-        const chunkLen = await this.readFromStream(buffer.subarray(bytesRead), mayBeLess);
-        if (chunkLen === 0)
-          break;
-        bytesRead += chunkLen;
-      }
-      if (!mayBeLess && bytesRead < buffer.length) {
-        throw new EndOfStreamError();
-      }
-      return bytesRead;
-    }
-  }
-  class WebStreamReader extends AbstractStreamReader {
-    constructor(reader) {
-      super();
-      this.reader = reader;
-    }
-    async abort() {
-      return this.close();
-    }
-    async close() {
-      this.reader.releaseLock();
-    }
-  }
-  class WebStreamByobReader extends WebStreamReader {
-async readFromStream(buffer, mayBeLess) {
-      if (buffer.length === 0)
-        return 0;
-      const result = await this.reader.read(new Uint8Array(buffer.length), { min: mayBeLess ? void 0 : buffer.length });
-      if (result.done) {
-        this.endOfStream = result.done;
-      }
-      if (result.value) {
-        buffer.set(result.value);
-        return result.value.length;
-      }
-      return 0;
-    }
-  }
-  class WebStreamDefaultReader extends AbstractStreamReader {
-    constructor(reader) {
-      super();
-      this.reader = reader;
-      this.buffer = null;
-    }
-writeChunk(target, chunk) {
-      const written = Math.min(chunk.length, target.length);
-      target.set(chunk.subarray(0, written));
-      if (written < chunk.length) {
-        this.buffer = chunk.subarray(written);
-      } else {
-        this.buffer = null;
-      }
-      return written;
-    }
-async readFromStream(buffer, mayBeLess) {
-      if (buffer.length === 0)
-        return 0;
-      let totalBytesRead = 0;
-      if (this.buffer) {
-        totalBytesRead += this.writeChunk(buffer, this.buffer);
-      }
-      while (totalBytesRead < buffer.length && !this.endOfStream) {
-        const result = await this.reader.read();
-        if (result.done) {
-          this.endOfStream = true;
-          break;
-        }
-        if (result.value) {
-          totalBytesRead += this.writeChunk(buffer.subarray(totalBytesRead), result.value);
-        }
-      }
-      if (!mayBeLess && totalBytesRead === 0 && this.endOfStream) {
-        throw new EndOfStreamError();
-      }
-      return totalBytesRead;
-    }
-    abort() {
-      this.interrupted = true;
-      return this.reader.cancel();
-    }
-    async close() {
-      await this.abort();
-      this.reader.releaseLock();
-    }
-  }
-  function makeWebStreamReader(stream) {
-    try {
-      const reader = stream.getReader({ mode: "byob" });
-      if (reader instanceof ReadableStreamDefaultReader) {
-        return new WebStreamDefaultReader(reader);
-      }
-      return new WebStreamByobReader(reader);
-    } catch (error) {
-      if (error instanceof TypeError) {
-        return new WebStreamDefaultReader(stream.getReader());
-      }
-      throw error;
-    }
-  }
-  class AbstractTokenizer {
-constructor(options) {
-      this.numBuffer = new Uint8Array(8);
-      this.position = 0;
-      this.onClose = options?.onClose;
-      if (options?.abortSignal) {
-        options.abortSignal.addEventListener("abort", () => {
-          this.abort();
-        });
-      }
-    }
-async readToken(token, position = this.position) {
-      const uint8Array = new Uint8Array(token.len);
-      const len = await this.readBuffer(uint8Array, { position });
-      if (len < token.len)
-        throw new EndOfStreamError();
-      return token.get(uint8Array, 0);
-    }
-async peekToken(token, position = this.position) {
-      const uint8Array = new Uint8Array(token.len);
-      const len = await this.peekBuffer(uint8Array, { position });
-      if (len < token.len)
-        throw new EndOfStreamError();
-      return token.get(uint8Array, 0);
-    }
-async readNumber(token) {
-      const len = await this.readBuffer(this.numBuffer, { length: token.len });
-      if (len < token.len)
-        throw new EndOfStreamError();
-      return token.get(this.numBuffer, 0);
-    }
-async peekNumber(token) {
-      const len = await this.peekBuffer(this.numBuffer, { length: token.len });
-      if (len < token.len)
-        throw new EndOfStreamError();
-      return token.get(this.numBuffer, 0);
-    }
-async ignore(length) {
-      if (this.fileInfo.size !== void 0) {
-        const bytesLeft = this.fileInfo.size - this.position;
-        if (length > bytesLeft) {
-          this.position += bytesLeft;
-          return bytesLeft;
-        }
-      }
-      this.position += length;
-      return length;
-    }
-    async close() {
-      await this.abort();
-      await this.onClose?.();
-    }
-    normalizeOptions(uint8Array, options) {
-      if (!this.supportsRandomAccess() && options && options.position !== void 0 && options.position < this.position) {
-        throw new Error("`options.position` must be equal or greater than `tokenizer.position`");
-      }
-      return {
-        ...{
-          mayBeLess: false,
-          offset: 0,
-          length: uint8Array.length,
-          position: this.position
-        },
-        ...options
-      };
-    }
-    abort() {
-      return Promise.resolve();
-    }
-  }
-  const maxBufferSize = 256e3;
-  class ReadStreamTokenizer extends AbstractTokenizer {
-constructor(streamReader, options) {
-      super(options);
-      this.streamReader = streamReader;
-      this.fileInfo = options?.fileInfo ?? {};
-    }
-async readBuffer(uint8Array, options) {
-      const normOptions = this.normalizeOptions(uint8Array, options);
-      const skipBytes = normOptions.position - this.position;
-      if (skipBytes > 0) {
-        await this.ignore(skipBytes);
-        return this.readBuffer(uint8Array, options);
-      }
-      if (skipBytes < 0) {
-        throw new Error("`options.position` must be equal or greater than `tokenizer.position`");
-      }
-      if (normOptions.length === 0) {
-        return 0;
-      }
-      const bytesRead = await this.streamReader.read(uint8Array.subarray(0, normOptions.length), normOptions.mayBeLess);
-      this.position += bytesRead;
-      if ((!options || !options.mayBeLess) && bytesRead < normOptions.length) {
-        throw new EndOfStreamError();
-      }
-      return bytesRead;
-    }
-async peekBuffer(uint8Array, options) {
-      const normOptions = this.normalizeOptions(uint8Array, options);
-      let bytesRead = 0;
-      if (normOptions.position) {
-        const skipBytes = normOptions.position - this.position;
-        if (skipBytes > 0) {
-          const skipBuffer = new Uint8Array(normOptions.length + skipBytes);
-          bytesRead = await this.peekBuffer(skipBuffer, { mayBeLess: normOptions.mayBeLess });
-          uint8Array.set(skipBuffer.subarray(skipBytes));
-          return bytesRead - skipBytes;
-        }
-        if (skipBytes < 0) {
-          throw new Error("Cannot peek from a negative offset in a stream");
-        }
-      }
-      if (normOptions.length > 0) {
-        try {
-          bytesRead = await this.streamReader.peek(uint8Array.subarray(0, normOptions.length), normOptions.mayBeLess);
-        } catch (err2) {
-          if (options?.mayBeLess && err2 instanceof EndOfStreamError) {
-            return 0;
-          }
-          throw err2;
-        }
-        if (!normOptions.mayBeLess && bytesRead < normOptions.length) {
-          throw new EndOfStreamError();
-        }
-      }
-      return bytesRead;
-    }
-    async ignore(length) {
-      const bufSize = Math.min(maxBufferSize, length);
-      const buf = new Uint8Array(bufSize);
-      let totBytesRead = 0;
-      while (totBytesRead < length) {
-        const remaining = length - totBytesRead;
-        const bytesRead = await this.readBuffer(buf, { length: Math.min(bufSize, remaining) });
-        if (bytesRead < 0) {
-          return bytesRead;
-        }
-        totBytesRead += bytesRead;
-      }
-      return totBytesRead;
-    }
-    abort() {
-      return this.streamReader.abort();
-    }
-    async close() {
-      return this.streamReader.close();
-    }
-    supportsRandomAccess() {
-      return false;
-    }
-  }
-  class BufferTokenizer extends AbstractTokenizer {
-constructor(uint8Array, options) {
-      super(options);
-      this.uint8Array = uint8Array;
-      this.fileInfo = { ...options?.fileInfo ?? {}, ...{ size: uint8Array.length } };
-    }
-async readBuffer(uint8Array, options) {
-      if (options?.position) {
-        this.position = options.position;
-      }
-      const bytesRead = await this.peekBuffer(uint8Array, options);
-      this.position += bytesRead;
-      return bytesRead;
-    }
-async peekBuffer(uint8Array, options) {
-      const normOptions = this.normalizeOptions(uint8Array, options);
-      const bytes2read = Math.min(this.uint8Array.length - normOptions.position, normOptions.length);
-      if (!normOptions.mayBeLess && bytes2read < normOptions.length) {
-        throw new EndOfStreamError();
-      }
-      uint8Array.set(this.uint8Array.subarray(normOptions.position, normOptions.position + bytes2read));
-      return bytes2read;
-    }
-    close() {
-      return super.close();
-    }
-    supportsRandomAccess() {
-      return true;
-    }
-    setPosition(position) {
-      this.position = position;
-    }
-  }
-  function fromWebStream(webStream, options) {
-    const webStreamReader = makeWebStreamReader(webStream);
-    const _options = options ?? {};
-    const chainedClose = _options.onClose;
-    _options.onClose = async () => {
-      await webStreamReader.close();
-      if (chainedClose) {
-        return chainedClose();
-      }
-    };
-    return new ReadStreamTokenizer(webStreamReader, _options);
-  }
-  function fromBuffer(uint8Array, options) {
-    return new BufferTokenizer(uint8Array, options);
-  }
   var ch2 = {};
   var wk = (function(c2, id, msg, transfer, cb) {
     var w = new Worker(ch2[id] || (ch2[id] = URL.createObjectURL(new Blob([
@@ -3171,6 +2535,1032 @@ async peekBuffer(uint8Array, options) {
   var mt = typeof queueMicrotask == "function" ? queueMicrotask : typeof setTimeout == "function" ? setTimeout : function(fn) {
     fn();
   };
+  var _unsafeWindow = (() => typeof unsafeWindow != "undefined" ? unsafeWindow : void 0)();
+  const c = window.console;
+  const origConsole = (() => {
+    return {
+      log: c.log.bind(c),
+      warn: c.warn.bind(c),
+      info: c.info.bind(c),
+      error: c.error.bind(c),
+      debug: c.debug.bind(c)
+    };
+  })();
+  function extractDlsiteId(url) {
+    return url.match(/work\/([A-Z\d]+)\//)?.[1] ?? url.match(/\/viewer\/free\/([A-Z\d]+)/)?.[1] ?? null;
+  }
+  const PUZZLE_BLOCK_SIZE = 128;
+  const DETECT_RETRY_DELAYS = [0, 1500, 4e3];
+  const hookFetchPuzzle = () => {
+    return new Promise((resolve) => {
+      detectPuzzleWithRetries(resolve);
+    });
+  };
+  async function detectPuzzleWithRetries(resolve) {
+    const workNo = extractDlsiteId(_unsafeWindow.location.href);
+    if (!workNo) return;
+    for (const delay of DETECT_RETRY_DELAYS) {
+      if (delay > 0) await sleep(delay);
+      if (!isSameWork(workNo)) return;
+      try {
+        const credential = await getDownloadCredential(workNo);
+        const downloadPrefix = normalizeDownloadPrefix(credential?.url);
+        if (!downloadPrefix) continue;
+        const zipTree = await getZipTree(downloadPrefix);
+        const files = collectPuzzleFiles(zipTree);
+        if (files.length === 0) continue;
+        const workMeta = await getWorkMeta(workNo).catch((err2) => {
+          origConsole.warn("[puzzle] Failed to fetch work metadata", err2);
+          return null;
+        });
+        const zipFileName = makePuzzleSaveName(workNo, workMeta);
+        if (!isSameWork(workNo)) return;
+        resolve({
+          method: "puzzle",
+          data: {
+            urls: files,
+            zipFileName,
+            download: () => downloadPuzzleImagesToZip(downloadPrefix, files, `${zipFileName}.zip`)
+          }
+        });
+        return;
+      } catch (err2) {
+        origConsole.debug("[puzzle] Detection attempt failed", err2);
+      }
+    }
+  }
+  function isSameWork(workNo) {
+    return extractDlsiteId(_unsafeWindow.location.href) === workNo;
+  }
+  function sleep(ms2) {
+    return new Promise((resolve) => setTimeout(resolve, ms2));
+  }
+  async function getDownloadCredential(workNo) {
+    const url = new URL("https://play.dl.dlsite.com/api/download/sign/cookie");
+    url.searchParams.set("workno", workNo);
+    const response = await pageFetch(url.href, {
+      method: "GET",
+      credentials: "include",
+      referrer: "https://play.dlsite.com/",
+      headers: {
+        Accept: "*/*"
+      }
+    });
+    if (!response.ok) {
+      throw new Error(`download credential failed: ${response.status} ${response.statusText}`);
+    }
+    return response.json();
+  }
+  async function getZipTree(downloadPrefix) {
+    const response = await pageFetch(`${downloadPrefix}ziptree.json`, {
+      method: "GET",
+      credentials: "include",
+      referrer: "https://play.dlsite.com/",
+      headers: {
+        Accept: "application/json,*/*"
+      }
+    });
+    if (!response.ok) {
+      throw new Error(`ziptree download failed: ${response.status} ${response.statusText}`);
+    }
+    return response.json();
+  }
+  async function getWorkMeta(workNo) {
+    const origins = Array.from(
+new Set([_unsafeWindow.location.origin, "https://play.dlsite.com"])
+    );
+    for (const origin of origins) {
+      const response = await pageFetch(`${origin}/api/work/${workNo}`, {
+        method: "GET",
+        credentials: "include",
+        referrer: `${origin}/`,
+        headers: {
+          Accept: "application/json,*/*"
+        }
+      }).catch(() => null);
+      if (response?.ok) return response.json();
+    }
+    return null;
+  }
+  function pageFetch(...args) {
+    return (_unsafeWindow.fetch || fetch).apply(_unsafeWindow, args);
+  }
+  function normalizeDownloadPrefix(url) {
+    if (typeof url !== "string" || url.length === 0) return null;
+    return url.endsWith("/") ? url : `${url}/`;
+  }
+  function collectPuzzleFiles(zipTree) {
+    const result = [];
+    const playfile = zipTree?.playfile || {};
+    const travel = (fileObj, path = "") => {
+      if (!fileObj || typeof fileObj !== "object") return;
+      if (fileObj.type === "folder") {
+        const folderPath = fileObj.path || joinPath(path, fileObj.name);
+        (fileObj.children || []).forEach((child) => travel(child, folderPath));
+        return;
+      }
+      if (fileObj.type !== "file" || fileObj.hashname?.toLowerCase().endsWith(".pdf")) {
+        return;
+      }
+      const optimized = normalizeOptimized(playfile[fileObj.hashname]?.image?.optimized);
+      if (!optimized) return;
+      result.push({
+        filename: normalizeZipPath(joinPath(path, fileObj.name)),
+        optimized
+      });
+    };
+    (zipTree?.tree || []).forEach((fileObj) => travel(fileObj));
+    return result;
+  }
+  function normalizeOptimized(optimized) {
+    const width = Number(optimized?.width);
+    const height = Number(optimized?.height);
+    if (!optimized?.name || !Number.isFinite(width) || !Number.isFinite(height)) {
+      return null;
+    }
+    return {
+      ...optimized,
+      width,
+      height
+    };
+  }
+  function joinPath(path, name) {
+    return [path, name].filter(Boolean).join("/");
+  }
+  function normalizeZipPath(path) {
+    const safeParts = String(path || "image").replace(/\\/g, "/").split("/").filter((part) => part && part !== "." && part !== "..").map((part) => part.replace(/[<>:"|?*\x00-\x1f]/g, "_"));
+    return safeParts.join("/") || "image";
+  }
+  function makePuzzleSaveName(workNo, workMeta) {
+    const title = pickLocalized(workMeta?.name) || workNo;
+    const maker = pickLocalized(workMeta?.maker?.name);
+    const baseName = maker ? `[${workNo}] (${maker}) ${title}` : `[${workNo}] ${title}`;
+    return sanitizeFileName(baseName);
+  }
+  function pickLocalized(value) {
+    if (!value) return "";
+    if (typeof value === "string") return value;
+    return value.ja_JP || value.en_US || value.zh_CN || value.zh_TW || Object.values(value).find((item) => typeof item === "string") || "";
+  }
+  function sanitizeFileName(name) {
+    return String(name || "DLsite Play Download").replace(/[\\/:*?"<>|]/g, "_").replace(/\s+/g, " ").trim();
+  }
+  function getDecryptedImageData(optimized) {
+    const cropCount = {
+      w: Math.ceil(optimized.width / PUZZLE_BLOCK_SIZE),
+      h: Math.ceil(optimized.height / PUZZLE_BLOCK_SIZE)
+    };
+    const seed = parseInt(optimized.name.substring(5, 12), 16);
+    if (!Number.isFinite(seed)) {
+      throw new Error(`invalid puzzle seed: ${optimized.name}`);
+    }
+    const coordinates = shuffleWithMersenneTwister(
+      seed,
+      [...Array(cropCount.w * cropCount.h).keys()]
+    ).map((value, index) => ({
+      sx: PUZZLE_BLOCK_SIZE * modulo(index, cropCount.w),
+      sy: PUZZLE_BLOCK_SIZE * divide(index, cropCount.w),
+      dx: PUZZLE_BLOCK_SIZE * modulo(value, cropCount.w),
+      dy: PUZZLE_BLOCK_SIZE * divide(value, cropCount.w)
+    }));
+    return {
+      sourceCropSize: PUZZLE_BLOCK_SIZE,
+      cropCount,
+      coordinates
+    };
+  }
+  function shuffleWithMersenneTwister(seed, values) {
+    const random = new MersenneTwister(seed);
+    for (let index = values.length - 1; index > 0; index--) {
+      const swapIndex = Math.floor(random.random() * (index + 1));
+      [values[index], values[swapIndex]] = [values[swapIndex], values[index]];
+    }
+    return values;
+  }
+  function modulo(value, divisor) {
+    return value >= divisor ? value % divisor : value;
+  }
+  function divide(value, divisor) {
+    return value >= divisor ? Math.floor(value / divisor) : 0;
+  }
+  async function downloadPuzzleImagesToZip(downloadPrefix, files, outputZip, concurrency = 3) {
+    const zipFiles = {};
+    let successCount = 0;
+    let failCount = 0;
+    const runTask = async (file, index) => {
+      try {
+        const entryName = replaceExtension(file.filename, ".png");
+        origConsole.log(`[puzzle] Downloading ${entryName}`);
+        _unsafeWindow.add_log?.(`Downloading: ${index + 1}/${files.length}`);
+        const image = await restorePuzzleImage(downloadPrefix, file);
+        addUniqueZipFile(zipFiles, entryName, image);
+        successCount++;
+        _unsafeWindow.add_log?.(`Done: ${entryName}`);
+        return { success: true, name: entryName };
+      } catch (err2) {
+        failCount++;
+        origConsole.error("[puzzle] Failed to process image", file, err2);
+        _unsafeWindow.add_log?.(`Failed: ${file.filename} (${err2.message})`);
+        return { success: false, name: file.filename, error: err2.message };
+      }
+    };
+    await runWithConcurrency(files, concurrency, runTask);
+    if (Object.keys(zipFiles).length === 0) {
+      throw new Error("all puzzle images failed, cannot create ZIP");
+    }
+    return new Promise((resolve, reject) => {
+      zip(zipFiles, (err2, zipped) => {
+        if (err2) {
+          origConsole.error("[puzzle] ZIP failed", err2);
+          reject(err2);
+          return;
+        }
+        const blob = new Blob([zipped], { type: "application/zip" });
+        const blobUrl = URL.createObjectURL(blob);
+        const anchor = document.createElement("a");
+        anchor.href = blobUrl;
+        anchor.download = outputZip;
+        const summary = `Completed: ${successCount} success, ${failCount} failed -> ${outputZip}`;
+        origConsole.log(`[puzzle] ${summary}`);
+        _unsafeWindow.add_log?.(summary);
+        resolve({
+          save: () => {
+            anchor.click();
+            setTimeout(() => URL.revokeObjectURL(blobUrl), 1e3);
+          },
+          successCount,
+          failCount,
+          blobUrl
+        });
+      });
+    });
+  }
+  async function runWithConcurrency(items, maxConcurrent, runTask) {
+    const results = [];
+    const executing = new Set();
+    for (let index = 0; index < items.length; index++) {
+      if (executing.size >= maxConcurrent) {
+        await Promise.race(executing);
+      }
+      const taskPromise = runTask(items[index], index).finally(() => {
+        executing.delete(taskPromise);
+      });
+      executing.add(taskPromise);
+      results.push(taskPromise);
+    }
+    return Promise.allSettled(results);
+  }
+  async function restorePuzzleImage(downloadPrefix, { optimized }) {
+    const response = await pageFetch(`${downloadPrefix}optimized/${optimized.name}`, {
+      method: "GET",
+      credentials: "include",
+      referrer: "https://play.dlsite.com/",
+      headers: {
+        Accept: "image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8"
+      }
+    });
+    if (!response.ok) {
+      throw new Error(`image download failed: ${response.status} ${response.statusText}`);
+    }
+    const blob = await response.blob();
+    const img = await loadImage(blob);
+    const canvas = document.createElement("canvas");
+    canvas.width = optimized.width;
+    canvas.height = optimized.height;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) throw new Error("failed to create canvas context");
+    const { sourceCropSize, cropCount, coordinates } = getDecryptedImageData(optimized);
+    const overflow = {
+      w: Math.max(0, img.width - optimized.width),
+      h: Math.max(0, img.height - optimized.height)
+    };
+    for (const coordinate of coordinates) {
+      const width = coordinate.dx + sourceCropSize === sourceCropSize * cropCount.w ? sourceCropSize - overflow.w : sourceCropSize;
+      const height = coordinate.dy + sourceCropSize === sourceCropSize * cropCount.h ? sourceCropSize - overflow.h : sourceCropSize;
+      if (width <= 0 || height <= 0) continue;
+      ctx.drawImage(
+        img,
+        coordinate.sx,
+        coordinate.sy,
+        width,
+        height,
+        coordinate.dx,
+        coordinate.dy,
+        width,
+        height
+      );
+    }
+    const pngBlob = await canvasToBlob(canvas);
+    return new Uint8Array(await pngBlob.arrayBuffer());
+  }
+  function loadImage(blob) {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      const objectUrl = URL.createObjectURL(blob);
+      img.onload = () => {
+        URL.revokeObjectURL(objectUrl);
+        resolve(img);
+      };
+      img.onerror = () => {
+        URL.revokeObjectURL(objectUrl);
+        reject(new Error("failed to decode puzzle image"));
+      };
+      img.src = objectUrl;
+    });
+  }
+  function canvasToBlob(canvas) {
+    return new Promise((resolve, reject) => {
+      canvas.toBlob((blob) => {
+        if (blob) resolve(blob);
+        else reject(new Error("failed to encode restored image"));
+      }, "image/png");
+    });
+  }
+  function replaceExtension(filename, ext) {
+    const slashIndex = filename.lastIndexOf("/");
+    const dotIndex = filename.lastIndexOf(".");
+    if (dotIndex > slashIndex) {
+      return `${filename.slice(0, dotIndex)}${ext}`;
+    }
+    return `${filename}${ext}`;
+  }
+  function addUniqueZipFile(zipFiles, filename, data) {
+    let name = filename;
+    let count = 2;
+    while (zipFiles[name]) {
+      name = appendSuffix(filename, `_${count}`);
+      count++;
+    }
+    zipFiles[name] = data;
+  }
+  function appendSuffix(filename, suffix) {
+    const slashIndex = filename.lastIndexOf("/");
+    const dotIndex = filename.lastIndexOf(".");
+    if (dotIndex > slashIndex) {
+      return `${filename.slice(0, dotIndex)}${suffix}${filename.slice(dotIndex)}`;
+    }
+    return `${filename}${suffix}`;
+  }
+  class MersenneTwister {
+    constructor(seed) {
+      this.mt = new Array(624);
+      this.index = 624;
+      this.init(seed >>> 0);
+    }
+    init(seed) {
+      this.mt[0] = seed >>> 0;
+      for (let index = 1; index < 624; index++) {
+        this.mt[index] = Math.imul(1812433253, this.mt[index - 1] ^ this.mt[index - 1] >>> 30) + index >>> 0;
+      }
+    }
+    randomInt() {
+      if (this.index >= 624) {
+        this.twist();
+      }
+      let value = this.mt[this.index++];
+      value ^= value >>> 11;
+      value ^= value << 7 & 2636928640;
+      value ^= value << 15 & 4022730752;
+      value ^= value >>> 18;
+      return value >>> 0;
+    }
+    random() {
+      return this.randomInt() * (1 / 4294967296);
+    }
+    twist() {
+      for (let index = 0; index < 624; index++) {
+        const value = (this.mt[index] & 2147483648) + (this.mt[(index + 1) % 624] & 2147483647);
+        let next = value >>> 1;
+        if (value % 2 !== 0) {
+          next ^= 2567483615;
+        }
+        this.mt[index] = this.mt[(index + 397) % 624] ^ next;
+      }
+      this.index = 0;
+    }
+  }
+  const origFetch = _unsafeWindow.fetch;
+  const hooks = [];
+  const registerRequestHook = (pattern, callback, once = false) => {
+    hooks.push({ pattern, callback, once });
+    origConsole.log("[hookRequest] 注册 hook:", pattern, once ? "(once)" : "");
+  };
+  if (!_unsafeWindow.__requestHooked__) {
+    _unsafeWindow.__requestHooked__ = true;
+    _unsafeWindow.fetch = async (...args) => {
+      const [resource] = args;
+      const url = typeof resource === "string" ? resource : resource.url;
+      const matchedHooks = hooks.filter((h) => h.pattern.test(url));
+      if (matchedHooks.length === 0) return origFetch(...args);
+      origConsole.log("[hookRequest] 捕获 fetch 请求：", url);
+      const response = await origFetch(...args);
+      const cloned = response.clone();
+      matchedHooks.forEach((h) => {
+        cloned.clone().json().then(
+          (json) => {
+            try {
+              h.callback(json, response, url, "fetch");
+            } catch (err2) {
+              origConsole.error("[hookRequest] fetch 回调错误:", err2);
+            }
+            if (h.once) removeHook(h);
+          },
+          () => {
+          }
+        );
+      });
+      return response;
+    };
+    const OrigXHR = _unsafeWindow.XMLHttpRequest;
+    class HookedXHR extends OrigXHR {
+      constructor() {
+        super();
+        this._url = null;
+        const origOpen = this.open;
+        this.open = function(method, url, ...rest) {
+          this._url = url;
+          return origOpen.call(this, method, url, ...rest);
+        };
+        const origSend = this.send;
+        this.send = function(...args) {
+          this.addEventListener("load", () => {
+            try {
+              const matchedHooks = hooks.filter((h) => h.pattern.test(this._url));
+              if (matchedHooks.length === 0) return;
+              origConsole.log("[hookRequest] 捕获 XHR 请求：", this._url);
+              let json = null;
+              try {
+                json = JSON.parse(this.responseText);
+              } catch {
+              }
+              matchedHooks.forEach((h) => {
+                try {
+                  h.callback(json, this, this._url, "xhr");
+                } catch (err2) {
+                  origConsole.error("[hookRequest] xhr 回调错误:", err2);
+                }
+                if (h.once) removeHook(h);
+              });
+            } catch (err2) {
+              origConsole.error("[hookRequest] XHR 处理错误:", err2);
+            }
+          });
+          return origSend.apply(this, args);
+        };
+      }
+    }
+    _unsafeWindow.XMLHttpRequest = HookedXHR;
+    origConsole.log("[hookRequest] 已挂载 fetch + XHR hook");
+  }
+  function removeHook(hookObj) {
+    const index = hooks.indexOf(hookObj);
+    if (index !== -1) {
+      hooks.splice(index, 1);
+      origConsole.log("[hookRequest] 已移除一次性 hook:", hookObj.pattern);
+    }
+  }
+  const WINDOWS_1252_EXTRA = {
+    128: "€",
+    130: "‚",
+    131: "ƒ",
+    132: "„",
+    133: "…",
+    134: "†",
+    135: "‡",
+    136: "ˆ",
+    137: "‰",
+    138: "Š",
+    139: "‹",
+    140: "Œ",
+    142: "Ž",
+    145: "‘",
+    146: "’",
+    147: "“",
+    148: "”",
+    149: "•",
+    150: "–",
+    151: "—",
+    152: "˜",
+    153: "™",
+    154: "š",
+    155: "›",
+    156: "œ",
+    158: "ž",
+    159: "Ÿ"
+  };
+  for (const [code, char] of Object.entries(WINDOWS_1252_EXTRA)) {
+  }
+  function textDecode(bytes, encoding = "utf-8") {
+    switch (encoding.toLowerCase()) {
+      case "utf-8":
+      case "utf8":
+        if (typeof globalThis.TextDecoder !== "undefined") {
+          return new globalThis.TextDecoder("utf-8").decode(bytes);
+        }
+        return decodeUTF8(bytes);
+      case "utf-16le":
+        return decodeUTF16LE(bytes);
+      case "ascii":
+        return decodeASCII(bytes);
+      case "latin1":
+      case "iso-8859-1":
+        return decodeLatin1(bytes);
+      case "windows-1252":
+        return decodeWindows1252(bytes);
+      default:
+        throw new RangeError(`Encoding '${encoding}' not supported`);
+    }
+  }
+  function decodeUTF8(bytes) {
+    let out = "";
+    let i = 0;
+    while (i < bytes.length) {
+      const b1 = bytes[i++];
+      if (b1 < 128) {
+        out += String.fromCharCode(b1);
+      } else if (b1 < 224) {
+        const b2 = bytes[i++] & 63;
+        out += String.fromCharCode((b1 & 31) << 6 | b2);
+      } else if (b1 < 240) {
+        const b2 = bytes[i++] & 63;
+        const b3 = bytes[i++] & 63;
+        out += String.fromCharCode((b1 & 15) << 12 | b2 << 6 | b3);
+      } else {
+        const b2 = bytes[i++] & 63;
+        const b3 = bytes[i++] & 63;
+        const b4 = bytes[i++] & 63;
+        let cp = (b1 & 7) << 18 | b2 << 12 | b3 << 6 | b4;
+        cp -= 65536;
+        out += String.fromCharCode(55296 + (cp >> 10 & 1023), 56320 + (cp & 1023));
+      }
+    }
+    return out;
+  }
+  function decodeUTF16LE(bytes) {
+    let out = "";
+    for (let i = 0; i < bytes.length; i += 2) {
+      out += String.fromCharCode(bytes[i] | bytes[i + 1] << 8);
+    }
+    return out;
+  }
+  function decodeASCII(bytes) {
+    return String.fromCharCode(...bytes.map((b) => b & 127));
+  }
+  function decodeLatin1(bytes) {
+    return String.fromCharCode(...bytes);
+  }
+  function decodeWindows1252(bytes) {
+    let out = "";
+    for (const b of bytes) {
+      if (b >= 128 && b <= 159 && WINDOWS_1252_EXTRA[b]) {
+        out += WINDOWS_1252_EXTRA[b];
+      } else {
+        out += String.fromCharCode(b);
+      }
+    }
+    return out;
+  }
+  function dv(array) {
+    return new DataView(array.buffer, array.byteOffset);
+  }
+  const UINT8 = {
+    len: 1,
+    get(array, offset) {
+      return dv(array).getUint8(offset);
+    },
+    put(array, offset, value) {
+      dv(array).setUint8(offset, value);
+      return offset + 1;
+    }
+  };
+  const UINT16_LE = {
+    len: 2,
+    get(array, offset) {
+      return dv(array).getUint16(offset, true);
+    },
+    put(array, offset, value) {
+      dv(array).setUint16(offset, value, true);
+      return offset + 2;
+    }
+  };
+  const UINT16_BE = {
+    len: 2,
+    get(array, offset) {
+      return dv(array).getUint16(offset);
+    },
+    put(array, offset, value) {
+      dv(array).setUint16(offset, value);
+      return offset + 2;
+    }
+  };
+  const UINT32_LE = {
+    len: 4,
+    get(array, offset) {
+      return dv(array).getUint32(offset, true);
+    },
+    put(array, offset, value) {
+      dv(array).setUint32(offset, value, true);
+      return offset + 4;
+    }
+  };
+  const UINT32_BE = {
+    len: 4,
+    get(array, offset) {
+      return dv(array).getUint32(offset);
+    },
+    put(array, offset, value) {
+      dv(array).setUint32(offset, value);
+      return offset + 4;
+    }
+  };
+  const INT32_BE = {
+    len: 4,
+    get(array, offset) {
+      return dv(array).getInt32(offset);
+    },
+    put(array, offset, value) {
+      dv(array).setInt32(offset, value);
+      return offset + 4;
+    }
+  };
+  const UINT64_LE = {
+    len: 8,
+    get(array, offset) {
+      return dv(array).getBigUint64(offset, true);
+    },
+    put(array, offset, value) {
+      dv(array).setBigUint64(offset, value, true);
+      return offset + 8;
+    }
+  };
+  class StringType {
+    constructor(len, encoding) {
+      this.len = len;
+      this.encoding = encoding;
+    }
+    get(data, offset = 0) {
+      const bytes = data.subarray(offset, offset + this.len);
+      return textDecode(bytes, this.encoding);
+    }
+  }
+  const defaultMessages = "End-Of-Stream";
+  class EndOfStreamError extends Error {
+    constructor() {
+      super(defaultMessages);
+      this.name = "EndOfStreamError";
+    }
+  }
+  class AbortError extends Error {
+    constructor(message = "The operation was aborted") {
+      super(message);
+      this.name = "AbortError";
+    }
+  }
+  class AbstractStreamReader {
+    constructor() {
+      this.endOfStream = false;
+      this.interrupted = false;
+      this.peekQueue = [];
+    }
+    async peek(uint8Array, mayBeLess = false) {
+      const bytesRead = await this.read(uint8Array, mayBeLess);
+      this.peekQueue.push(uint8Array.subarray(0, bytesRead));
+      return bytesRead;
+    }
+    async read(buffer, mayBeLess = false) {
+      if (buffer.length === 0) {
+        return 0;
+      }
+      let bytesRead = this.readFromPeekBuffer(buffer);
+      if (!this.endOfStream) {
+        bytesRead += await this.readRemainderFromStream(buffer.subarray(bytesRead), mayBeLess);
+      }
+      if (bytesRead === 0 && !mayBeLess) {
+        throw new EndOfStreamError();
+      }
+      return bytesRead;
+    }
+readFromPeekBuffer(buffer) {
+      let remaining = buffer.length;
+      let bytesRead = 0;
+      while (this.peekQueue.length > 0 && remaining > 0) {
+        const peekData = this.peekQueue.pop();
+        if (!peekData)
+          throw new Error("peekData should be defined");
+        const lenCopy = Math.min(peekData.length, remaining);
+        buffer.set(peekData.subarray(0, lenCopy), bytesRead);
+        bytesRead += lenCopy;
+        remaining -= lenCopy;
+        if (lenCopy < peekData.length) {
+          this.peekQueue.push(peekData.subarray(lenCopy));
+        }
+      }
+      return bytesRead;
+    }
+    async readRemainderFromStream(buffer, mayBeLess) {
+      let bytesRead = 0;
+      while (bytesRead < buffer.length && !this.endOfStream) {
+        if (this.interrupted) {
+          throw new AbortError();
+        }
+        const chunkLen = await this.readFromStream(buffer.subarray(bytesRead), mayBeLess);
+        if (chunkLen === 0)
+          break;
+        bytesRead += chunkLen;
+      }
+      if (!mayBeLess && bytesRead < buffer.length) {
+        throw new EndOfStreamError();
+      }
+      return bytesRead;
+    }
+  }
+  class WebStreamReader extends AbstractStreamReader {
+    constructor(reader) {
+      super();
+      this.reader = reader;
+    }
+    async abort() {
+      return this.close();
+    }
+    async close() {
+      this.reader.releaseLock();
+    }
+  }
+  class WebStreamByobReader extends WebStreamReader {
+async readFromStream(buffer, mayBeLess) {
+      if (buffer.length === 0)
+        return 0;
+      const result = await this.reader.read(new Uint8Array(buffer.length), { min: mayBeLess ? void 0 : buffer.length });
+      if (result.done) {
+        this.endOfStream = result.done;
+      }
+      if (result.value) {
+        buffer.set(result.value);
+        return result.value.length;
+      }
+      return 0;
+    }
+  }
+  class WebStreamDefaultReader extends AbstractStreamReader {
+    constructor(reader) {
+      super();
+      this.reader = reader;
+      this.buffer = null;
+    }
+writeChunk(target, chunk) {
+      const written = Math.min(chunk.length, target.length);
+      target.set(chunk.subarray(0, written));
+      if (written < chunk.length) {
+        this.buffer = chunk.subarray(written);
+      } else {
+        this.buffer = null;
+      }
+      return written;
+    }
+async readFromStream(buffer, mayBeLess) {
+      if (buffer.length === 0)
+        return 0;
+      let totalBytesRead = 0;
+      if (this.buffer) {
+        totalBytesRead += this.writeChunk(buffer, this.buffer);
+      }
+      while (totalBytesRead < buffer.length && !this.endOfStream) {
+        const result = await this.reader.read();
+        if (result.done) {
+          this.endOfStream = true;
+          break;
+        }
+        if (result.value) {
+          totalBytesRead += this.writeChunk(buffer.subarray(totalBytesRead), result.value);
+        }
+      }
+      if (!mayBeLess && totalBytesRead === 0 && this.endOfStream) {
+        throw new EndOfStreamError();
+      }
+      return totalBytesRead;
+    }
+    abort() {
+      this.interrupted = true;
+      return this.reader.cancel();
+    }
+    async close() {
+      await this.abort();
+      this.reader.releaseLock();
+    }
+  }
+  function makeWebStreamReader(stream) {
+    try {
+      const reader = stream.getReader({ mode: "byob" });
+      if (reader instanceof ReadableStreamDefaultReader) {
+        return new WebStreamDefaultReader(reader);
+      }
+      return new WebStreamByobReader(reader);
+    } catch (error) {
+      if (error instanceof TypeError) {
+        return new WebStreamDefaultReader(stream.getReader());
+      }
+      throw error;
+    }
+  }
+  class AbstractTokenizer {
+constructor(options) {
+      this.numBuffer = new Uint8Array(8);
+      this.position = 0;
+      this.onClose = options?.onClose;
+      if (options?.abortSignal) {
+        options.abortSignal.addEventListener("abort", () => {
+          this.abort();
+        });
+      }
+    }
+async readToken(token, position = this.position) {
+      const uint8Array = new Uint8Array(token.len);
+      const len = await this.readBuffer(uint8Array, { position });
+      if (len < token.len)
+        throw new EndOfStreamError();
+      return token.get(uint8Array, 0);
+    }
+async peekToken(token, position = this.position) {
+      const uint8Array = new Uint8Array(token.len);
+      const len = await this.peekBuffer(uint8Array, { position });
+      if (len < token.len)
+        throw new EndOfStreamError();
+      return token.get(uint8Array, 0);
+    }
+async readNumber(token) {
+      const len = await this.readBuffer(this.numBuffer, { length: token.len });
+      if (len < token.len)
+        throw new EndOfStreamError();
+      return token.get(this.numBuffer, 0);
+    }
+async peekNumber(token) {
+      const len = await this.peekBuffer(this.numBuffer, { length: token.len });
+      if (len < token.len)
+        throw new EndOfStreamError();
+      return token.get(this.numBuffer, 0);
+    }
+async ignore(length) {
+      if (this.fileInfo.size !== void 0) {
+        const bytesLeft = this.fileInfo.size - this.position;
+        if (length > bytesLeft) {
+          this.position += bytesLeft;
+          return bytesLeft;
+        }
+      }
+      this.position += length;
+      return length;
+    }
+    async close() {
+      await this.abort();
+      await this.onClose?.();
+    }
+    normalizeOptions(uint8Array, options) {
+      if (!this.supportsRandomAccess() && options && options.position !== void 0 && options.position < this.position) {
+        throw new Error("`options.position` must be equal or greater than `tokenizer.position`");
+      }
+      return {
+        ...{
+          mayBeLess: false,
+          offset: 0,
+          length: uint8Array.length,
+          position: this.position
+        },
+        ...options
+      };
+    }
+    abort() {
+      return Promise.resolve();
+    }
+  }
+  const maxBufferSize = 256e3;
+  class ReadStreamTokenizer extends AbstractTokenizer {
+constructor(streamReader, options) {
+      super(options);
+      this.streamReader = streamReader;
+      this.fileInfo = options?.fileInfo ?? {};
+    }
+async readBuffer(uint8Array, options) {
+      const normOptions = this.normalizeOptions(uint8Array, options);
+      const skipBytes = normOptions.position - this.position;
+      if (skipBytes > 0) {
+        await this.ignore(skipBytes);
+        return this.readBuffer(uint8Array, options);
+      }
+      if (skipBytes < 0) {
+        throw new Error("`options.position` must be equal or greater than `tokenizer.position`");
+      }
+      if (normOptions.length === 0) {
+        return 0;
+      }
+      const bytesRead = await this.streamReader.read(uint8Array.subarray(0, normOptions.length), normOptions.mayBeLess);
+      this.position += bytesRead;
+      if ((!options || !options.mayBeLess) && bytesRead < normOptions.length) {
+        throw new EndOfStreamError();
+      }
+      return bytesRead;
+    }
+async peekBuffer(uint8Array, options) {
+      const normOptions = this.normalizeOptions(uint8Array, options);
+      let bytesRead = 0;
+      if (normOptions.position) {
+        const skipBytes = normOptions.position - this.position;
+        if (skipBytes > 0) {
+          const skipBuffer = new Uint8Array(normOptions.length + skipBytes);
+          bytesRead = await this.peekBuffer(skipBuffer, { mayBeLess: normOptions.mayBeLess });
+          uint8Array.set(skipBuffer.subarray(skipBytes));
+          return bytesRead - skipBytes;
+        }
+        if (skipBytes < 0) {
+          throw new Error("Cannot peek from a negative offset in a stream");
+        }
+      }
+      if (normOptions.length > 0) {
+        try {
+          bytesRead = await this.streamReader.peek(uint8Array.subarray(0, normOptions.length), normOptions.mayBeLess);
+        } catch (err2) {
+          if (options?.mayBeLess && err2 instanceof EndOfStreamError) {
+            return 0;
+          }
+          throw err2;
+        }
+        if (!normOptions.mayBeLess && bytesRead < normOptions.length) {
+          throw new EndOfStreamError();
+        }
+      }
+      return bytesRead;
+    }
+    async ignore(length) {
+      const bufSize = Math.min(maxBufferSize, length);
+      const buf = new Uint8Array(bufSize);
+      let totBytesRead = 0;
+      while (totBytesRead < length) {
+        const remaining = length - totBytesRead;
+        const bytesRead = await this.readBuffer(buf, { length: Math.min(bufSize, remaining) });
+        if (bytesRead < 0) {
+          return bytesRead;
+        }
+        totBytesRead += bytesRead;
+      }
+      return totBytesRead;
+    }
+    abort() {
+      return this.streamReader.abort();
+    }
+    async close() {
+      return this.streamReader.close();
+    }
+    supportsRandomAccess() {
+      return false;
+    }
+  }
+  class BufferTokenizer extends AbstractTokenizer {
+constructor(uint8Array, options) {
+      super(options);
+      this.uint8Array = uint8Array;
+      this.fileInfo = { ...options?.fileInfo ?? {}, ...{ size: uint8Array.length } };
+    }
+async readBuffer(uint8Array, options) {
+      if (options?.position) {
+        this.position = options.position;
+      }
+      const bytesRead = await this.peekBuffer(uint8Array, options);
+      this.position += bytesRead;
+      return bytesRead;
+    }
+async peekBuffer(uint8Array, options) {
+      const normOptions = this.normalizeOptions(uint8Array, options);
+      const bytes2read = Math.min(this.uint8Array.length - normOptions.position, normOptions.length);
+      if (!normOptions.mayBeLess && bytes2read < normOptions.length) {
+        throw new EndOfStreamError();
+      }
+      uint8Array.set(this.uint8Array.subarray(normOptions.position, normOptions.position + bytes2read));
+      return bytes2read;
+    }
+    close() {
+      return super.close();
+    }
+    supportsRandomAccess() {
+      return true;
+    }
+    setPosition(position) {
+      this.position = position;
+    }
+  }
+  function fromWebStream(webStream, options) {
+    const webStreamReader = makeWebStreamReader(webStream);
+    const _options = options ?? {};
+    const chainedClose = _options.onClose;
+    _options.onClose = async () => {
+      await webStreamReader.close();
+      if (chainedClose) {
+        return chainedClose();
+      }
+    };
+    return new ReadStreamTokenizer(webStreamReader, _options);
+  }
+  function fromBuffer(uint8Array, options) {
+    return new BufferTokenizer(uint8Array, options);
+  }
   var browser = { exports: {} };
   var ms;
   var hasRequiredMs;
@@ -5878,7 +6268,7 @@ scanMpeg(offset) {
     const zipFiles = {};
     let successCount = 0;
     let failCount = 0;
-    const runWithConcurrency = async (tasks, maxConcurrent) => {
+    const runWithConcurrency2 = async (tasks, maxConcurrent) => {
       const results = [];
       const executing = new Set();
       for (const task of tasks) {
@@ -5915,7 +6305,7 @@ scanMpeg(offset) {
         return { success: false, name, error: err2.message };
       }
     };
-    await runWithConcurrency(files, concurrency);
+    await runWithConcurrency2(files, concurrency);
     if (Object.keys(zipFiles).length === 0) {
       const errorMsg = "所有文件处理失败，无法创建ZIP";
       origConsole.error(errorMsg);
@@ -5979,10 +6369,14 @@ scanMpeg(offset) {
     function add_log(text) {
       log_list.value.unshift(text);
     }
+    function clear_log() {
+      log_list.value = [];
+    }
     _unsafeWindow.add_log = add_log;
     return {
       log_list,
-      add_log
+      add_log,
+      clear_log
     };
   }
   const _export_sfc = (sfc, props) => {
@@ -6002,20 +6396,32 @@ scanMpeg(offset) {
       const attaching = vue.ref(false);
       const downloading = vue.ref(false);
       const download_fin = vue.ref(false);
-      let past_pathname = null;
+      let past_location_key = null;
+      let state_version = 0;
       const panel_hide = vue.ref(true);
       const attached_seccess = vue.ref(false);
       const url_nums = vue.ref(1);
       const downloaded_nums = vue.ref(0);
       let download_func = null;
       let save_func = null;
-      const { log_list, add_log } = useLog();
+      const { log_list, add_log, clear_log } = useLog();
       function start_download() {
+        const current_state_version = state_version;
         downloading.value = true;
         download_fin.value = false;
-        download_func?.().then(({ save: save2 }) => {
-          save_func = save2;
+        download_func?.().then((result) => {
+          if (current_state_version !== state_version) return;
+          if (!result?.save) {
+            throw new Error("download did not return a save handler");
+          }
+          save_func = result.save;
           download_fin.value = true;
+          downloading.value = false;
+        }).catch((e) => {
+          if (current_state_version !== state_version) return;
+          origConsole.error(e);
+          add_log("下载失败：" + e.message);
+          download_fin.value = false;
           downloading.value = false;
         });
       }
@@ -6024,33 +6430,42 @@ scanMpeg(offset) {
       }
       const attach_enc_method = () => {
         if (attaching.value) return;
+        const current_state_version = state_version;
         attaching.value = true;
-        Promise.race([hookXorEnc()]).then(({ method, data }) => {
+        Promise.race([hookXorEnc(), hookFetchPuzzle()]).then(({ method, data }) => {
+          if (current_state_version !== state_version) return;
           add_log("检测到加密方式：" + method);
           origConsole.log("检测到加密方式：", method, data);
-          if (method === "xor") {
-            const { urls, key, zipFileName, download, onProgress } = data;
+          if (method === "xor" || method === "puzzle") {
+            const { urls, key, zipFileName, download } = data;
             add_log("检测作品页数：" + urls.length);
             url_nums.value = urls.length;
             downloaded_nums.value = 0;
-            add_log("检测xor key：" + key);
+            if (key) {
+              add_log("检测xor key：" + key);
+            }
             add_log("检测作品名称：" + zipFileName);
             attached_seccess.value = true;
             panel_hide.value = false;
             download_func = download;
           }
         }).catch((e) => {
+          if (current_state_version !== state_version) return;
           origConsole.error(e);
         }).finally(() => {
+          if (current_state_version !== state_version) return;
           attaching.value = false;
         });
       };
       const locationUpdated = () => {
-        if (past_pathname != window.location.pathname) {
+        if (past_location_key != getLocationKey()) {
           pathnameUpdated();
         }
       };
-      const pathnameUpdated = () => {
+      const getLocationKey = () => window.location.href;
+      const clearPluginState = () => {
+        state_version++;
+        clear_log();
         add_log("页面已切换");
         origConsole.log("页面已切换");
         attaching.value = false;
@@ -6058,11 +6473,14 @@ scanMpeg(offset) {
         download_fin.value = false;
         panel_hide.value = true;
         attached_seccess.value = false;
-        past_pathname = null;
         url_nums.value = 1;
         downloaded_nums.value = 0;
         download_func = null;
         save_func = null;
+      };
+      const pathnameUpdated = () => {
+        past_location_key = getLocationKey();
+        clearPluginState();
         const no = extractDlsiteId(window.location.href);
         if (no) {
           origConsole.log(no);
@@ -6081,7 +6499,17 @@ scanMpeg(offset) {
         };
       };
       history.pushState = _wr("pushState");
+      history.replaceState = _wr("replaceState");
       window.addEventListener("pushState", function(e) {
+        locationUpdated();
+      });
+      window.addEventListener("replaceState", function(e) {
+        locationUpdated();
+      });
+      window.addEventListener("popstate", function(e) {
+        locationUpdated();
+      });
+      window.addEventListener("hashchange", function(e) {
         locationUpdated();
       });
       function findDeep2ndParentNode(dom) {
@@ -6156,7 +6584,7 @@ scanMpeg(offset) {
       };
     }
   };
-  const App = _export_sfc(_sfc_main, [["__scopeId", "data-v-9122b10d"]]);
+  const App = _export_sfc(_sfc_main, [["__scopeId", "data-v-f972eb09"]]);
   function mountApp() {
     if (!document.body) {
       requestAnimationFrame(mountApp);

@@ -50,7 +50,8 @@ const attaching = ref(false);
 const downloading = ref(false);
 const download_fin = ref(false);
 
-let past_pathname = null;
+let past_location_key = null;
+let state_version = 0;
 const panel_hide = ref(true);
 
 const attached_seccess = ref(false);
@@ -61,17 +62,30 @@ const downloaded_nums = ref(0);
 let download_func = null;
 let save_func = null;
 
-const { log_list, add_log } = useLog();
+const { log_list, add_log, clear_log } = useLog();
 
 function start_download() {
+  const current_state_version = state_version;
   downloading.value = true;
   download_fin.value = false;
 
-  download_func?.().then(({ save }) => {
-    save_func = save;
-    download_fin.value = true;
-    downloading.value = false;
-  });
+  download_func?.()
+    .then((result) => {
+      if (current_state_version !== state_version) return;
+      if (!result?.save) {
+        throw new Error("download did not return a save handler");
+      }
+      save_func = result.save;
+      download_fin.value = true;
+      downloading.value = false;
+    })
+    .catch((e) => {
+      if (current_state_version !== state_version) return;
+      origConsole.error(e);
+      add_log("下载失败：" + e.message);
+      download_fin.value = false;
+      downloading.value = false;
+    });
 }
 function save() {
   save_func?.();
@@ -81,18 +95,22 @@ function save() {
  */
 const attach_enc_method = () => {
   if (attaching.value) return;
+  const current_state_version = state_version;
   attaching.value = true;
 
-  Promise.race([hookXorEnc()])
+  Promise.race([hookXorEnc(), hookFetchPuzzle()])
     .then(({ method, data }) => {
+      if (current_state_version !== state_version) return;
       add_log("检测到加密方式：" + method);
       origConsole.log("检测到加密方式：", method, data);
-      if (method === "xor") {
-        const { urls, key, zipFileName, download, onProgress } = data;
+      if (method === "xor" || method === "puzzle") {
+        const { urls, key, zipFileName, download } = data;
         add_log("检测作品页数：" + urls.length);
         url_nums.value = urls.length;
         downloaded_nums.value = 0;
-        add_log("检测xor key：" + key);
+        if (key) {
+          add_log("检测xor key：" + key);
+        }
         add_log("检测作品名称：" + zipFileName);
         attached_seccess.value = true;
         panel_hide.value = false;
@@ -100,20 +118,26 @@ const attach_enc_method = () => {
       }
     })
     .catch((e) => {
+      if (current_state_version !== state_version) return;
       origConsole.error(e);
     })
     .finally(() => {
+      if (current_state_version !== state_version) return;
       attaching.value = false;
     });
 };
 
 const locationUpdated = () => {
-  if (past_pathname != window.location.pathname) {
+  if (past_location_key != getLocationKey()) {
     pathnameUpdated();
   }
 };
 
-const pathnameUpdated = () => {
+const getLocationKey = () => window.location.href;
+
+const clearPluginState = () => {
+  state_version++;
+  clear_log();
   add_log("页面已切换");
   origConsole.log("页面已切换");
   attaching.value = false;
@@ -121,11 +145,15 @@ const pathnameUpdated = () => {
   download_fin.value = false;
   panel_hide.value = true;
   attached_seccess.value = false;
-  past_pathname = null;
   url_nums.value = 1;
   downloaded_nums.value = 0;
   download_func = null;
   save_func = null;
+};
+
+const pathnameUpdated = () => {
+  past_location_key = getLocationKey();
+  clearPluginState();
 
   const no = extractDlsiteId(window.location.href);
   if (no) {
@@ -147,7 +175,17 @@ const _wr = function (type) {
   };
 };
 history.pushState = _wr("pushState");
+history.replaceState = _wr("replaceState");
 window.addEventListener("pushState", function (e) {
+  locationUpdated();
+});
+window.addEventListener("replaceState", function (e) {
+  locationUpdated();
+});
+window.addEventListener("popstate", function (e) {
+  locationUpdated();
+});
+window.addEventListener("hashchange", function (e) {
   locationUpdated();
 });
 
