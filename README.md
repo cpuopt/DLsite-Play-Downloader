@@ -1,12 +1,15 @@
 # DLsite-Play-Downloader
-在浏览器完成的DLsite Play漫画的下载、拼图和保存。
 
-Download comics from DLsite Play in browser.
-## 安装 Install
-[从Github安装](https://github.com/cpuopt/DLsite-Play-Downloader/raw/vite-monkey/DLsite-Play-Downloader-vue/dist/dlsite-play-downloader-vue.user.js)
+Download, stitch, and save DLsite Play comics in your browser.
 
-前往[Greasy Fork](https://greasyfork.org/zh-CN/scripts/480281-dlsite-play-downloader)页面
-## 使用 Usage
-需进入漫画阅读器界面后使用
+[中文说明](README_ZH.md)
+
+## Install
+[Install from GitHub](https://github.com/cpuopt/DLsite-Play-Downloader/raw/vite-monkey/DLsite-Play-Downloader-vue/dist/dlsite-play-downloader-vue.user.js)
+
+Visit the [Greasy Fork](https://greasyfork.org/zh-CN/scripts/480281-dlsite-play-downloader) page.
+
+## Usage
+Use it after opening the comic reader page.
 
 <img src="https://cd.xfan.top/f/N5pHO/QQ%E6%88%AA%E5%9B%BE20251014172134.jpg">
