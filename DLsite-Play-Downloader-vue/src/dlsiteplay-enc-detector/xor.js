@@ -163,6 +163,7 @@ const hookApiV2Work = () => {
 
     const patterns = [
       /\/api\/v2\/work\/.+$/,
+      /\/api\/v3\/viewer\/token\/.+$/,
       /\/api\/comipo\/v2\/work\/.+$/
     ];
 
