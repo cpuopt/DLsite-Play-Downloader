@@ -132,7 +132,7 @@ const hookXorKey = () => {
 
 const hookEncBinUrl = () => {
   return new Promise((resolve, reject) => {
-    registerRequestHook(/\/((i-\d+)|cover|\d+|[^\/]+)\.enc\?Policy=/, (json, response, url) => {
+    registerRequestHook(/\/[^/?]+\.enc(?:\?|$)/, (json, response, url) => {
       resolve({
         url: url,
       });

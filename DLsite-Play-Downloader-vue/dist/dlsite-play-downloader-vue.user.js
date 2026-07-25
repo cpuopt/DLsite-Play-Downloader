@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         DLsite Play Downloader
 // @namespace    https://github.com/cpuopt/DLsite-Play-Downloader
-// @version      2.2.0
+// @version      2.2.1
 // @author       cpufan
 // @description  在浏览器完成DLsite Play漫画的下载、拼图或解密和保存
 // @license      MIT
@@ -20,7 +20,7 @@
 
   const d=new Set;const importCSS = async e=>{d.has(e)||(d.add(e),(t=>{typeof GM_addStyle=="function"?GM_addStyle(t):document.head.appendChild(document.createElement("style")).append(t);})(e));};
 
-  importCSS(" .plugin-area[data-v-f972eb09]{position:fixed;right:0;top:50%;padding:1rem;transform:translateY(-50%);display:flex;row-gap:1rem;flex-direction:column;background:#fff3;border-radius:16px;backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);box-shadow:0 8px 30px #0000004d;transition:transform .6s ease-in-out}.plugin-area[hide=true][data-v-f972eb09]{transform:translateY(-50%) translate(95%)}.title[data-v-f972eb09]{width:100%;text-align:center;color:var(--surface-on-surface-primary);font-weight:700;-webkit-user-select:none;user-select:none}.button-area[data-v-f972eb09]{display:flex;row-gap:1rem;flex-direction:column}.log-area[data-v-f972eb09]{width:200px;height:100px;background-color:#00000080;border-radius:4px;display:flex;flex-direction:column;row-gap:.5rem;overflow:hidden;overflow-y:auto;flex-direction:column-reverse}.log-line[data-v-f972eb09]{line-break:anywhere} ");
+  importCSS(" .plugin-area[data-v-fe414780]{position:fixed;right:0;top:50%;padding:1rem;transform:translateY(-50%);display:flex;row-gap:1rem;flex-direction:column;background:#fff3;border-radius:16px;backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);box-shadow:0 8px 30px #0000004d;transition:transform .6s ease-in-out}.plugin-area[hide=true][data-v-fe414780]{transform:translateY(-50%) translate(95%)}.title[data-v-fe414780]{width:100%;text-align:center;color:var(--surface-on-surface-primary);font-weight:700;-webkit-user-select:none;user-select:none}.button-area[data-v-fe414780]{display:flex;row-gap:1rem;flex-direction:column}.log-area[data-v-fe414780]{width:200px;height:100px;background-color:#00000080;border-radius:4px;display:flex;flex-direction:column;row-gap:.5rem;overflow:hidden;overflow-y:auto;flex-direction:column-reverse}.log-line[data-v-fe414780]{line-break:anywhere} ");
 
   const styleCss = ".dlsite-play-downloader-vue{position:fixed;z-index:9999}";
   importCSS(styleCss);
@@ -2942,32 +2942,29 @@ new Set([_unsafeWindow.location.origin, "https://play.dlsite.com"])
   const origFetch = _unsafeWindow.fetch;
   const hooks = [];
   const registerRequestHook = (pattern, callback, once = false) => {
-    hooks.push({ pattern, callback, once });
+    const hook = { pattern, callback, once };
+    hooks.push(hook);
     origConsole.log("[hookRequest] 注册 hook:", pattern, once ? "(once)" : "");
+    return () => removeHook(hook);
   };
   if (!_unsafeWindow.__requestHooked__) {
     _unsafeWindow.__requestHooked__ = true;
     _unsafeWindow.fetch = async (...args) => {
       const [resource] = args;
-      const url = typeof resource === "string" ? resource : resource.url;
+      const url = typeof resource === "string" ? resource : resource instanceof URL ? resource.href : resource?.url;
       const matchedHooks = hooks.filter((h) => h.pattern.test(url));
       if (matchedHooks.length === 0) return origFetch(...args);
       origConsole.log("[hookRequest] 捕获 fetch 请求：", url);
       const response = await origFetch(...args);
-      const cloned = response.clone();
       matchedHooks.forEach((h) => {
-        cloned.clone().json().then(
-          (json) => {
-            try {
-              h.callback(json, response, url, "fetch");
-            } catch (err2) {
-              origConsole.error("[hookRequest] fetch 回调错误:", err2);
-            }
-            if (h.once) removeHook(h);
-          },
-          () => {
+        response.clone().json().catch(() => null).then((json) => {
+          try {
+            h.callback(json, response, url, "fetch");
+          } catch (err2) {
+            origConsole.error("[hookRequest] fetch 回调错误:", err2);
           }
-        );
+          if (h.once) removeHook(h);
+        });
       });
       return response;
     };
@@ -6204,7 +6201,7 @@ scanMpeg(offset) {
   };
   const hookEncBinUrl = () => {
     return new Promise((resolve, reject) => {
-      registerRequestHook(/\/((i-\d+)|cover|\d+|[^\/]+)\.enc\?Policy=/, (json, response, url) => {
+      registerRequestHook(/\/[^/?]+\.enc(?:\?|$)/, (json, response, url) => {
         resolve({
           url
         });
@@ -6231,6 +6228,7 @@ scanMpeg(offset) {
       };
       const patterns = [
         /\/api\/v2\/work\/.+$/,
+        /\/api\/viewer\/work\/.+$/,
         /\/api\/comipo\/v2\/work\/.+$/
       ];
       patterns.forEach((pattern) => {
@@ -6584,7 +6582,7 @@ scanMpeg(offset) {
       };
     }
   };
-  const App = _export_sfc(_sfc_main, [["__scopeId", "data-v-f972eb09"]]);
+  const App = _export_sfc(_sfc_main, [["__scopeId", "data-v-fe414780"]]);
   function mountApp() {
     if (!document.body) {
       requestAnimationFrame(mountApp);

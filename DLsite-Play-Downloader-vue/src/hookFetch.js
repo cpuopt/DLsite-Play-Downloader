@@ -12,8 +12,10 @@ const hooks = [];
  * @param {boolean} [once=false] 是否只捕获一次
  */
 export const registerRequestHook = (pattern, callback, once = false) => {
-    hooks.push({ pattern, callback, once });
+    const hook = { pattern, callback, once };
+    hooks.push(hook);
     origConsole.log("[hookRequest] 注册 hook:", pattern, once ? "(once)" : "");
+    return () => removeHook(hook);
 };
 
 
@@ -23,7 +25,12 @@ if (!unsafeWindow.__requestHooked__) {
     // ---- Hook Fetch ----
     unsafeWindow.fetch = async (...args) => {
         const [resource] = args;
-        const url = typeof resource === "string" ? resource : resource.url;
+        const url =
+            typeof resource === "string"
+                ? resource
+                : resource instanceof URL
+                    ? resource.href
+                    : resource?.url;
         const matchedHooks = hooks.filter((h) => h.pattern.test(url));
 
         if (matchedHooks.length === 0) return origFetch(...args);
@@ -31,23 +38,19 @@ if (!unsafeWindow.__requestHooked__) {
         origConsole.log("[hookRequest] 捕获 fetch 请求：", url);
 
         const response = await origFetch(...args);
-        const cloned = response.clone();
-
         matchedHooks.forEach((h) => {
-            cloned
+            response
                 .clone()
                 .json()
-                .then(
-                    (json) => {
-                        try {
-                            h.callback(json, response, url, "fetch");
-                        } catch (err) {
-                            origConsole.error("[hookRequest] fetch 回调错误:", err);
-                        }
-                        if (h.once) removeHook(h);
-                    },
-                    () => { }
-                );
+                .catch(() => null)
+                .then((json) => {
+                    try {
+                        h.callback(json, response, url, "fetch");
+                    } catch (err) {
+                        origConsole.error("[hookRequest] fetch 回调错误:", err);
+                    }
+                    if (h.once) removeHook(h);
+                });
         });
 
         return response;
