@@ -69,7 +69,7 @@ function sleep(ms) {
 }
 
 async function getDownloadCredential(workNo) {
-  const url = new URL("https://play.dl.dlsite.com/api/download/sign/cookie");
+  const url = new URL("https://play.dlsite.com/api/v3/download/sign/cookie");
   url.searchParams.set("workno", workNo);
 
   const response = await pageFetch(url.href, {
